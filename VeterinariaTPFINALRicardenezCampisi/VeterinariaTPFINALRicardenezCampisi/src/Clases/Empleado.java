@@ -6,12 +6,14 @@ public class Empleado extends Persona{
     private String email;
     private String contrasenia;
     private TURNO turno;
+    private boolean cuenta_activa;
 
     public Empleado(String nombre, int edad, int dni, String email, String contrasenia, TURNO turno) {
         super(nombre, edad, dni);
         this.email = email;
         this.contrasenia = contrasenia;
         this.turno = turno;
+        this.cuenta_activa = false; /// al crear la cuenta se settea en true
     }
 
     public String getEmail() {
