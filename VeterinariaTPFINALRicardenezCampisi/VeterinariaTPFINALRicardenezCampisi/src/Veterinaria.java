@@ -18,6 +18,7 @@ public class Veterinaria {
 
 
     public void agregarEmpleado(String nombre, int edad, int dni, String email, String contrasenia, TURNO turno){
+        /// FALTAN VALIDACIONES
             Empleado e = new Empleado(nombre, edad, dni, email, contrasenia, turno);
             Personal.agregar(e);
     }
