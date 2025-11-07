@@ -28,7 +28,7 @@ public class Veterinaria {
                 }
 
         }catch (ExcepcionYaExistente e){
-            e.getMessage();
+            System.out.println(e.getMessage());
         }
 
     }
