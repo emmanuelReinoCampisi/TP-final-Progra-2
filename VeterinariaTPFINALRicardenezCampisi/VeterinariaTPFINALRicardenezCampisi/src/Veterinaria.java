@@ -33,6 +33,13 @@ public class Veterinaria {
 
     }
 
+    public String listarEmpleados(){
+        String lista = "";
+        return lista += Personal.listar();
+    }
+
+
+
     public void agregarDuenios(){
 
     }
