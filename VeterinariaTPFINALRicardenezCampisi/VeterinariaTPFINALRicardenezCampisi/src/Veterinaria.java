@@ -1,6 +1,7 @@
 import Clases.Cita;
 import Clases.Duenio;
 import Clases.Empleado;
+import Enumeradores.TURNO;
 
 public class Veterinaria {
     private static final String nombre = "VETPET"; /// Guardar en el archivo segun el profe y lo de gmailAdmin + contraAdmin tambien || COMO???
@@ -15,9 +16,10 @@ public class Veterinaria {
         Citas = new Gestor<>();
     }
 
-    public void agregarEmpleado(Empleado empleado){
 
-
+    public void agregarEmpleado(String nombre, int edad, int dni, String email, String contrasenia, TURNO turno){
+            Empleado e = new Empleado(nombre, edad, dni, email, contrasenia, turno);
+            Personal.agregar(e);
     }
 
     public void agregarDuenios(){
