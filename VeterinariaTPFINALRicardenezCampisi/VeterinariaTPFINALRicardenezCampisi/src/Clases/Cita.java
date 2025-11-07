@@ -2,21 +2,26 @@ package Clases;
 
 import Enumeradores.ESPECIE;
 import Enumeradores.ESTADOCITA;
+import org.json.JSONObject;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Objects;
 
 public class Cita {
     private int idCita;
     private static int contador = 1000;
-    private LocalDateTime fecha;
+    private LocalDate fecha; /// Se cambio "LocalDateTime fecha" a LocalDate y LocalTime.
+    private LocalTime horario; /// LocalDate almacena un dia, LocalTime un horario.
     private String motivo;
     private Mascota mascota;
     private ESTADOCITA estadoCita;
 
-    public Cita(int idCita, LocalDateTime fecha, String motivo, Mascota mascota, ESTADOCITA estadoCita) {
+    public Cita(LocalDate fecha, LocalTime horario, String motivo, Mascota mascota, ESTADOCITA estadoCita) {
         this.idCita = ++contador;
         this.fecha = fecha;
+        this.horario = horario;
         this.motivo = motivo;
         this.mascota = mascota;
         this.estadoCita = estadoCita;
@@ -38,12 +43,20 @@ public class Cita {
         this.motivo = motivo;
     }
 
-    public LocalDateTime getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDateTime fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
+    }
+
+    public LocalTime getHorario() {
+        return horario;
+    }
+
+    public void setHorario(LocalTime horario) {
+        this.horario = horario;
     }
 
     public int getIdCita() {
@@ -80,5 +93,27 @@ public class Cita {
     @Override
     public int hashCode() {
         return Objects.hashCode(idCita);
+    }
+
+    @Override
+    public String toString() {
+        return "Cita{" +
+                "idCita=" + idCita +
+                ", fecha=" + fecha +
+                ", horario=" + horario +
+                ", motivo='" + motivo + '\'' +
+                 " " + mascota +
+                ", estadoCita=" + estadoCita +
+                '}';
+    }
+
+     public JSONObject citaTOJson (){ /// Metodo para pasar una cita a JSONObject
+        JSONObject citaJSON = new JSONObject();
+        citaJSON.put("id_cita",idCita);
+        citaJSON.put("fecha",fecha);
+        citaJSON.put("motivo",motivo);
+        citaJSON.put("id_mascota", mascota.getID()); // Se paso solamente el ID de la mascota para evitar un bucle donde citaTOJson llame a mascotaTOJson para que esta llame a citaTOJson nuevamente
+        citaJSON.put("estado_cita",estadoCita);
+        return citaJSON;
     }
 }

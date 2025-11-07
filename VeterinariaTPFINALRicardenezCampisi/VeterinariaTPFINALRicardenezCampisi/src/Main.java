@@ -1,19 +1,13 @@
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 
-import Clases.Duenio;
-import Clases.Cita;
-import Clases.Empleado;
-import Clases.Mascota;
-import Clases.Persona;
-import Clases.Veterinario;
+import Clases.*;
 import Enumeradores.ESPECIE;
 import Enumeradores.ESTADOCITA;
-import Enumeradores.TURNO;
-import Excepciones.ExcepcionNoExistente;
-import Excepciones.ExcepcionYaExistente;
-import Excepciones.ExcepcionColeccionVacia;
 import org.json.JSONObject;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 
 public class Main {
@@ -22,14 +16,21 @@ public class Main {
         try {
             Admin admin = new Admin();
             JSONObject JSONAdmin = admin.toJsonAdmin();
-            JSONUtiles.cargaJSONOBJ(JSONAdmin, "Admin");
+            JSONUtiles.cargaJSONOBJ(JSONAdmin, "Clases.Admin");
         }catch (Exception e){
             e.printStackTrace();
         }
+        LocalDate fechaCita = LocalDate.of(2025,11,7);
+        LocalTime horarioCita = java.time.LocalTime.of(10,30);
+        String motivo = "Esta cita fue creada para testeo";
 
+        Mascota TobyTester = new Mascota("TobyTester",2, ESPECIE.CANINO,"Rottweiler",11223344);
+        Cita cita = new Cita (fechaCita,horarioCita, motivo, TobyTester, ESTADOCITA.PENDIENTE);
 
+        System.out.println(cita.toString());
 
-
-
+        JSONObject jsonObject = cita.citaTOJson();
+        System.out.println("json object cita:");
+        System.out.println(jsonObject);
     }
 }
