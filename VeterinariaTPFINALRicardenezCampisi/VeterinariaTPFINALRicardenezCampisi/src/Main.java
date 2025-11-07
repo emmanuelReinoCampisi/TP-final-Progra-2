@@ -13,13 +13,18 @@ import Enumeradores.TURNO;
 import Excepciones.ExcepcionNoExistente;
 import Excepciones.ExcepcionYaExistente;
 import Excepciones.ExcepcionColeccionVacia;
+import org.json.JSONObject;
 
 
 public class Main {
     public static void main(String[] args) {
 
-
-
-
+        try {
+            Admin admin = new Admin();
+            JSONObject JSONAdmin = admin.toJsonAdmin();
+            JSONUtiles.cargaJSONOBJ(JSONAdmin, "Admin");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
