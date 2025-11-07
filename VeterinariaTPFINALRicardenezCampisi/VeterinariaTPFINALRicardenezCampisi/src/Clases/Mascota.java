@@ -1,6 +1,8 @@
 package Clases;
 
 import Enumeradores.ESPECIE;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -69,7 +71,7 @@ public class Mascota {
 
     @Override
     public String toString() {
-        return "Clases.Mascota{" +
+        return "Mascota{" +
                 "ID=" + ID +
                 ", nombre='" + nombre + '\'' +
                 ", edad=" + edad +
@@ -129,5 +131,19 @@ public class Mascota {
             System.out.println("ExcepcionContenedorVacio");
         }
         return seElimino;
+    }
+
+    public JSONObject mascotaTOJson(){
+        JSONObject mascotaJSON = new JSONObject();
+        JSONArray citasJArray = new JSONArray();
+        mascotaJSON.put("nombre",nombre);
+        mascotaJSON.put("edad",edad);
+        mascotaJSON.put("especie",especie);
+        mascotaJSON.put("raza",raza);
+        for(Cita c: this.historialClinico){
+            citasJArray.put(c.citaTOJson());
+        }
+        mascotaJSON.put("dni_duenio",dniDuenio);
+        return mascotaJSON;
     }
 }
