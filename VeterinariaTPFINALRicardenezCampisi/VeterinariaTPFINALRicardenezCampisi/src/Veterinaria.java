@@ -2,6 +2,7 @@ import Clases.Cita;
 import Clases.Duenio;
 import Clases.Empleado;
 import Enumeradores.TURNO;
+import Excepciones.ExcepcionYaExistente;
 
 public class Veterinaria {
     private static final String nombre = "VETPET"; /// Guardar en el archivo segun el profe y lo de gmailAdmin + contraAdmin tambien || COMO???
@@ -17,10 +18,19 @@ public class Veterinaria {
     }
 
 
-    public void agregarEmpleado(String nombre, int edad, int dni, String email, String contrasenia, TURNO turno){
-        /// FALTAN VALIDACIONES
-            Empleado e = new Empleado(nombre, edad, dni, email, contrasenia, turno);
-            Personal.agregar(e);
+    public void agregarEmpleado(String nombre, int edad, int dni, String email, String contrasenia, TURNO turno)throws ExcepcionYaExistente {
+        Empleado empleado = new Empleado(nombre, edad, dni, email, contrasenia, turno);
+        try{
+                if(Personal.existe(empleado)){
+                    Personal.agregar(empleado);
+                }else{
+                    throw new ExcepcionYaExistente("Empleado existente");
+                }
+
+        }catch (ExcepcionYaExistente e){
+            e.getMessage();
+        }
+
     }
 
     public void agregarDuenios(){

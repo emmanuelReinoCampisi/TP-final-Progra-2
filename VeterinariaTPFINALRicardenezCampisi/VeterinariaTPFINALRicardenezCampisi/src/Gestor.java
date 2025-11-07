@@ -12,9 +12,10 @@ public class Gestor <T> {
         Personas.add(t);
     }
 
-    public void eliminar(T t){
-        Personas.remove(t);
+    public boolean existe(T e){
+        return Personas.contains(e);
     }
+
     public String listar(){
         StringBuilder sb = new StringBuilder(" ");
         for (T elemento: Personas){
