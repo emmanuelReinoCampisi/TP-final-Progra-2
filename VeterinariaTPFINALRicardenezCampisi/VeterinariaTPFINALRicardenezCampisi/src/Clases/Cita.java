@@ -2,10 +2,10 @@ package Clases;
 
 import Enumeradores.ESPECIE;
 import Enumeradores.ESTADOCITA;
+import Enumeradores.TIPOCITA;
 import org.json.JSONObject;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Objects;
 
@@ -14,17 +14,19 @@ public class Cita {
     private static int contador = 1000;
     private LocalDate fecha; /// Se cambio "LocalDateTime fecha" a LocalDate y LocalTime.
     private LocalTime horario; /// LocalDate almacena un dia, LocalTime un horario.
-    private String motivo;
+    private TIPOCITA motivo; /// hay motivos predefinidos mas generales
     private Mascota mascota;
     private ESTADOCITA estadoCita;
+    private Veterinario veterinarioAcargo;
 
-    public Cita(LocalDate fecha, LocalTime horario, String motivo, Mascota mascota, ESTADOCITA estadoCita) {
+    public Cita(LocalDate fecha, LocalTime horario, TIPOCITA motivo, Mascota mascota, ESTADOCITA estadoCita,Veterinario veterinarioAcargo) {
         this.idCita = ++contador;
         this.fecha = fecha;
         this.horario = horario;
         this.motivo = motivo;
         this.mascota = mascota;
         this.estadoCita = estadoCita;
+        this.veterinarioAcargo = veterinarioAcargo;
     }
 
     public ESTADOCITA getEstadoCita() {
@@ -35,11 +37,11 @@ public class Cita {
         this.estadoCita = estadoCita;
     }
 
-    public String getMotivo() {
+    public TIPOCITA getMotivo() {
         return motivo;
     }
 
-    public void setMotivo(String motivo) {
+    public void setMotivo(TIPOCITA motivo) {
         this.motivo = motivo;
     }
 
@@ -82,6 +84,19 @@ public class Cita {
     public int getDniDuenioMascota(){
         return this.mascota.getDniDuenio();
     }
+
+    public Veterinario getVeterinarioAcargo() {
+        return veterinarioAcargo;
+    }
+
+    public Mascota getMascota() {
+        return mascota;
+    }
+
+    public LocalTime getFinCita(){
+        return horario.plusMinutes(motivo.getDuracionMinutos()); // aca sabemos a que hora estimada termina la cita
+    }
+
 
     @Override
     public boolean equals(Object o) {
