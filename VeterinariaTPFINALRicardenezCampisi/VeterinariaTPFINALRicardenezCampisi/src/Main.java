@@ -45,17 +45,17 @@ public class Main {
 
 
         try{    // asi tira eror por el veterinario ocupado
-            /*veterinaria.agregarCita(fechaCita,horarioCita, TIPOCITA.CONTROL, TobyTester, ESTADOCITA.PENDIENTE,Vettester);
-                veterinaria.agregarCita(fechaCita2,horarioCita2, TIPOCITA.CONTROL, TobyTester, ESTADOCITA.PENDIENTE,Vettester);
-                */
+            //veterinaria.agregarCita(fechaCita,horarioCita, TIPOCITA.CONTROL, TobyTester, ESTADOCITA.PENDIENTE,Vettester);
+            //veterinaria.agregarCita(fechaCita,horarioCita, TIPOCITA.CONTROL, CocoTester, ESTADOCITA.PENDIENTE,Vettester);
 
-                /* asi por la mascota que ya tiene asignada una cita
+
+                //asi por la mascota que ya tiene asignada una cita
                 veterinaria.agregarCita(fechaCita,horarioCita, TIPOCITA.CONTROL, TobyTester, ESTADOCITA.PENDIENTE,Vettester);
-                veterinaria.agregarCita(fechaCita2,horarioCita2, TIPOCITA.CONTROL, TobyTester, ESTADOCITA.PENDIENTE,Vettester);
-                */
-            // aca anda bien 
-            veterinaria.agregarCita(fechaCita,horarioCita, TIPOCITA.CONTROL, TobyTester, ESTADOCITA.PENDIENTE,Vettester);
-            veterinaria.agregarCita(fechaCita,horarioCita, TIPOCITA.CONTROL, CocoTester, ESTADOCITA.PENDIENTE,Vettester2);
+                veterinaria.agregarCita(fechaCita,horarioCita, TIPOCITA.CONTROL, TobyTester, ESTADOCITA.PENDIENTE,Vettester2);
+
+            // aca anda bien
+            //veterinaria.agregarCita(fechaCita,horarioCita, TIPOCITA.CONTROL, TobyTester, ESTADOCITA.PENDIENTE,Vettester);
+            //veterinaria.agregarCita(fechaCita,horarioCita, TIPOCITA.CONTROL, CocoTester, ESTADOCITA.PENDIENTE,Vettester2);
 
         }catch (CitaInvalidaExcep c){
             System.out.println(""+c.getMessage());
