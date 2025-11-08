@@ -7,17 +7,24 @@ import Excepciones.ExcepcionNoExistente;
 import Excepciones.ExcepcionYaExistente;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Veterinario extends Empleado {
     private String matricula;
     private ArrayList <ESPECIE> especialidades;
+    private HashSet<Cita> citas;
 
     public Veterinario(String nombre, int edad, int dni, String email, String contrasenia, TURNO turno, String matricula) {
         super(nombre, edad, dni, email, contrasenia, turno);
         this.matricula = matricula;
         this.especialidades = new ArrayList<>();
+        this.citas = new HashSet<>();
     }
 
+
+    public void asignarCita(Cita cita){
+        citas.add(cita);
+    }
     public String getMatricula() {
         return matricula;
     }

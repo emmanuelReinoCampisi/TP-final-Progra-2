@@ -85,6 +85,7 @@ public void agregarCita (LocalDate fecha, LocalTime horario, TIPOCITA motivo, Ma
     }
     // si no se solapa con ninguna existente y es veterinario esta libre la agrega
     Citas.agregar(c);
+    veterinario.asignarCita(c); // le asignamos la cita al veterinario
 }
 
 
