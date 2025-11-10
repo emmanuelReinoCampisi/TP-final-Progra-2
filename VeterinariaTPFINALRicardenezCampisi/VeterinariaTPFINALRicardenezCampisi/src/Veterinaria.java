@@ -1,4 +1,5 @@
 import Clases.*;
+import Enumeradores.ESPECIE;
 import Enumeradores.ESTADOCITA;
 import Enumeradores.TIPOCITA;
 import Enumeradores.TURNO;
@@ -90,9 +91,17 @@ public void agregarCita (LocalDate fecha, LocalTime horario, TIPOCITA motivo, Ma
 
 
 
+    // metodo para agregar un duenio nuevo que no este cargado en el sistema
+    public void agregarDuenioNuevo(String nombre, int edad, int dni, long telefono, String direccion, String nombreM, int edadM, ESPECIE especie, String raza, int dniDuenio)throws ExcepcionYaExistente{
+        Duenio nuevo = new Duenio(nombre, edad, dni, telefono, direccion);
+        Mascota nueva = new Mascota(nombre, edad, especie, raza, dniDuenio);
 
-    public void agregarDuenios(){
-
+        if(Duenios.existe(nuevo)){
+            throw new ExcepcionYaExistente("Duenio ya existente");
+        }else{
+            nuevo.agregarMascota(nueva);
+            Duenios.agregar(nuevo);
+        }
     }
 
 
