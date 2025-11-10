@@ -38,4 +38,10 @@ public class Empleado extends Persona{
     }
 
 
+    @Override
+    public String getIdentificador() {
+        return this.email;
+    }
+
+
 }

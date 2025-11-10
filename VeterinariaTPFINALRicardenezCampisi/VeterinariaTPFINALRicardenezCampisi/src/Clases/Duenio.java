@@ -39,6 +39,17 @@ public class Duenio extends Persona {
         return sb.toString();
     }
 
+
+    public String listarMascotasEspecifica(String nombreMascota){
+        StringBuilder sb = new StringBuilder(" ");
+
+        for(Mascota m: mascotas){
+            if(m.getNombre().equals(nombreMascota)){
+                sb.append(m).append("\n");
+            }
+        }
+        return sb.toString();
+    }
     @Override
     public String toString() {
         return "Clases.Duenio{" +

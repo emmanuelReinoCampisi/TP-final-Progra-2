@@ -2,7 +2,8 @@ package Clases;
 
 import java.util.Objects;
 
-public abstract class Persona {
+
+public abstract class Persona implements Identificable {
     private String nombre;
     private int dni;
     private int edad;
@@ -44,5 +45,15 @@ public abstract class Persona {
     @Override
     public int hashCode() {
         return Objects.hashCode(dni);
+    }
+
+    @Override
+    public String getIdentificador() {
+        return this.nombre;
+    }
+
+    @Override
+    public int getId() {
+        return this.dni;
     }
 }

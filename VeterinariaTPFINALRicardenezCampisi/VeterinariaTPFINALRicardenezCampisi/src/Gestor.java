@@ -1,7 +1,9 @@
+import Clases.Identificable;
+
 import java.util.HashSet;
 import java.util.Iterator;
 
-public class Gestor <T> {
+public class Gestor <T extends Identificable>  {
     private HashSet<T> elementos;
 
     public Gestor(){
@@ -30,6 +32,23 @@ public Iterator <T> getIterator(){
     }
 
 
-    
+    public String buscarPorId(int id) // con este buscamos por DNI
+    {
+        String mensaje = "";
+        for(T t: elementos) if(t.getId()==id) return mensaje+=t.toString();
+        return mensaje;
+    }
 
+
+    public String buscarPorIdentificador(String identificador) // con este buscamos por mail o matricula del empleado
+    {
+        String mensaje = "";
+        for(T t: elementos){
+            if(t.getIdentificador().equals(identificador)){
+
+                mensaje+=t.toString();
+            }
+        }
+        return mensaje;
+    }
 }

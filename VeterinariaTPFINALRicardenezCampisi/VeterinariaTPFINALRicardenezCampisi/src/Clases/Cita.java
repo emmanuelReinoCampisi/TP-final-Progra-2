@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
-public class Cita {
+public class Cita implements Identificable{
     private int idCita;
     private static int contador = 1000;
     private LocalDate fecha; /// Se cambio "LocalDateTime fecha" a LocalDate y LocalTime.
@@ -130,5 +130,15 @@ public class Cita {
         citaJSON.put("id_mascota", mascota.getID()); // Se paso solamente el ID de la mascota para evitar un bucle donde citaTOJson llame a mascotaTOJson para que esta llame a citaTOJson nuevamente
         citaJSON.put("estado_cita",estadoCita);
         return citaJSON;
+    }
+
+    @Override
+    public int getId() {
+        return this.idCita;
+    }
+
+    @Override
+    public String getIdentificador() {
+        return this.mascota.toString();
     }
 }

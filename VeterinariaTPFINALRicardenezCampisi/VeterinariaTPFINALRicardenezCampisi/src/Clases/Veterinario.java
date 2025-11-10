@@ -71,4 +71,10 @@ public class Veterinario extends Empleado {
         return seElimino;
     }
 
+    @Override
+    public String getIdentificador() {
+        return this.matricula;
+    }
+
+
 }

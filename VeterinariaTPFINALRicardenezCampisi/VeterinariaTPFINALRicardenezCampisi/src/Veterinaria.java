@@ -95,12 +95,19 @@ public void agregarCita (LocalDate fecha, LocalTime horario, TIPOCITA motivo, Ma
 
     }
 
-    public void agregarCitas(){
+
+    public String buscarDuenioPorDNI(int dni)
+    {
+        String lista = "";
+        return lista = Duenios.buscarPorId(dni);
 
     }
 
-
-
+    public String buscarEmpleadoPorId(String identificador) /// aca lo que le vamos a mandar es el mail o matricula del empleado ya que son unicos
+    {
+        String lista = "";
+        return lista = Personal.buscarPorIdentificador(identificador);
+    }
 
 
 }
