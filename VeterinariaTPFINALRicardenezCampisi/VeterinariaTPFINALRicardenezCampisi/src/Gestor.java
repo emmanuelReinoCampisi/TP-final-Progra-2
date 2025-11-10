@@ -29,4 +29,7 @@ public Iterator <T> getIterator(){
         return elementos.iterator();
     }
 
+
+    
+
 }

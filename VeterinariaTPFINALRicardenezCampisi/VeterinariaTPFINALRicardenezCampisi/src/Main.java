@@ -19,7 +19,7 @@ public class Main {
         try {
             Admin admin = new Admin();
             JSONObject JSONAdmin = admin.toJsonAdmin();
-            JSONUtiles.cargaJSONOBJ(JSONAdmin, "Clases.Admin");
+            JSONUtiles.cargaJSONOBJ(JSONAdmin, "Admin");
         }catch (Exception e){
             e.printStackTrace();
         }
