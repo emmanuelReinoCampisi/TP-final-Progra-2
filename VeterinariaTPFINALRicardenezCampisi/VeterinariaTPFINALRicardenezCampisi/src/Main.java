@@ -11,10 +11,62 @@ import org.json.JSONObject;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Scanner;
 
 
 public class Main {
     public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        Veterinaria veterinaria = new Veterinaria();
+        boolean salir = false;
+
+        System.out.println("🐾----Bienvenido al sistema de: "+veterinaria.getNombre()+" ----🐾");
+        while(!salir){
+            System.out.println("💠 MENU PRINCIPAL 💠");
+            System.out.println("1. Ingresar como Recepcionista");
+            System.out.println("2. Ingresar como Veterinario");
+            System.out.println("3. Ingresar modo Admin");
+            System.out.println("4. Salir del menu");
+            System.out.println("Ingrese una opcion....");
+            int opcion = sc.nextInt();
+            sc.nextLine();
+            switch (opcion){
+
+                case 1:
+                    /// MENU RECEPCIONISTA
+
+
+                    break;
+
+
+                case 2:
+
+                        /// MENU VETERINARIO
+                    break;
+
+                case 3:
+                     /// MENU ADMIN
+                    break;
+
+
+                case 4:
+                    System.out.println("⚙️-CERRANDO EL SISTEMA-⚙️");
+                    /// llamamos al metodo que persiste los datos en el archivo
+                    salir = true;
+                    break;
+                default:System.out.println("⚠️-INGRESE UNA OPCION VALIDA-⚠️");
+            }
+
+            sc.close();
+        }
+
+
+
+
+
+
+
 
         try {
             Admin admin = new Admin();
@@ -23,7 +75,7 @@ public class Main {
         }catch (Exception e){
             e.printStackTrace();
         }
-        Veterinaria veterinaria = new Veterinaria();
+
 
         LocalDate fechaCita = LocalDate.of(2025,11,8);
         LocalDate fechaCita2 = LocalDate.of(2025,11,8);

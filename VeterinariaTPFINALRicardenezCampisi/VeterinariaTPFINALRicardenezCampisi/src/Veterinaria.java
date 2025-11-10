@@ -22,6 +22,9 @@ public class Veterinaria {
         Duenios = new Gestor<>();
         Citas = new Gestor<>();
     }
+    public static String getNombre() {
+        return nombre;
+    }
 
 
     public void agregarEmpleado(String nombre, int edad, int dni, String email, String contrasenia, TURNO turno)throws ExcepcionYaExistente {
