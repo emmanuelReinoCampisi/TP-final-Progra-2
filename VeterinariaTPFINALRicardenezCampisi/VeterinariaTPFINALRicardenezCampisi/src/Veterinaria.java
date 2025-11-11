@@ -17,8 +17,10 @@
     import java.util.Iterator;
 
     public class Veterinaria {
-        private static final String nombre = "VETPET"; /// Guardar en el archivo segun el profe y lo de gmailAdmin + contraAdmin tambien || COMO???
-        private static final String direccion = "Juan B. Justo 492"; ///  Guardar en el archivo segun el profe
+        private final String nombre = "VETPET"; /// Guardar en el archivo segun el profe y lo de gmailAdmin + contraAdmin tambien || COMO???
+        private final String direccion = "Juan B. Justo 492"; ///  Guardar en el archivo segun el profe
+        private final String emailAdmin = "adminVeterinaria@gmail.com";
+        private final String contraseniaAdmin = "Perrunos123";
         private Gestor<Empleado> Personal; ///veterinarios y recepcionistas
         private Gestor<Duenio> Duenios;
         private Gestor<Cita> Citas;
@@ -28,10 +30,10 @@
             Duenios = new Gestor<>();
             Citas = new Gestor<>();
         }
-        public static String getNombre() {
+
+        public String getNombre() {
             return nombre;
         }
-
 
         public void agregarEmpleado(String nombre, int edad, int dni, String email, String contrasenia, TURNO turno)throws ExcepcionYaExistente {
             Empleado empleado = new Empleado(nombre, edad, dni, email, contrasenia, turno);
@@ -219,7 +221,8 @@
             try {
                 jsonVet.put("nombre", nombre);
                 jsonVet.put("direccion",direccion);
-
+                jsonVet.put("email_admin",emailAdmin);
+                jsonVet.put("contrasenia_admin",contraseniaAdmin);
                 //Empleados
                 JSONArray empleadosJSON = jsonVet.getJSONArray("empleados");
                 Iterator<Empleado> itE = Personal.getIterator();
@@ -231,18 +234,18 @@
 
                 // Duenios
                 JSONArray dueniosJSON = jsonVet.getJSONArray("duenios");
-                Iterator<Empleado> itD = Personal.getIterator();
-                while (itE.hasNext()) {
-                    dueniosJSON.put(itE.next().TOJSON());
+                Iterator<Duenio> itD = Duenios.getIterator();
+                while (itD.hasNext()) {
+                    dueniosJSON.put(itD.next().TOJSON());
                 }
                 jsonVet.put("duenios", dueniosJSON);
 
                 // Citas
 
                 JSONArray citasJSON = jsonVet.getJSONArray("citas");
-                Iterator<Empleado> itC = Personal.getIterator();
-                while (itE.hasNext()) {
-                    citasJSON.put(itE.next().TOJSON());
+                Iterator<Cita> itC = Citas.getIterator();
+                while (itC.hasNext()) {
+                    citasJSON.put(itC.next().citaTOJson());
                 }
                 jsonVet.put("citas", citasJSON);
 
