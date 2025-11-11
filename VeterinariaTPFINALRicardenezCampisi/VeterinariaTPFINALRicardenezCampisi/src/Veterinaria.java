@@ -6,6 +6,9 @@
     import Excepciones.CitaInvalidaExcep;
     import Excepciones.ExcepcionNoExistente;
     import Excepciones.ExcepcionYaExistente;
+    import org.json.JSONArray;
+    import org.json.JSONException;
+    import org.json.JSONObject;
 
     import java.time.LocalDate;
     import java.time.LocalDateTime;
@@ -208,6 +211,53 @@
       }
 
 
+
+
+        public JSONObject toJSONVET(){
+            JSONObject jsonVet = new JSONObject();
+
+            try {
+                jsonVet.put("nombre", nombre);
+                jsonVet.put("direccion",direccion);
+
+                //Empleados
+                JSONArray empleadosJSON = jsonVet.getJSONArray("empleados");
+                Iterator<Empleado> itE = Personal.getIterator();
+                while (itE.hasNext()) {
+                    empleadosJSON.put(itE.next().TOJSON());
+                }
+                jsonVet.put("personal", empleadosJSON);
+
+
+                // Duenios
+                JSONArray dueniosJSON = jsonVet.getJSONArray("duenios");
+                Iterator<Empleado> itD = Personal.getIterator();
+                while (itE.hasNext()) {
+                    dueniosJSON.put(itE.next().TOJSON());
+                }
+                jsonVet.put("duenios", dueniosJSON);
+
+                // Citas
+
+                JSONArray citasJSON = jsonVet.getJSONArray("citas");
+                Iterator<Empleado> itC = Personal.getIterator();
+                while (itE.hasNext()) {
+                    citasJSON.put(itE.next().TOJSON());
+                }
+                jsonVet.put("citas", citasJSON);
+
+            }catch(JSONException e){
+                e.printStackTrace();
+            }
+
+            return jsonVet;
+        }
+
+
+        public void cargarVetJSON(String nombreArchivo){
+            JSONObject jsonVet = this.toJSONVET();
+            FileHandler.cargaJSONOBJ(jsonVet, nombreArchivo);
+        }
 
 
     }

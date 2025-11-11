@@ -72,7 +72,7 @@ public class Main {
         try {
             Admin admin = new Admin();
             JSONObject JSONAdmin = admin.toJsonAdmin();
-            JSONUtiles.cargaJSONOBJ(JSONAdmin, "Admin");
+            FileHandler.cargaJSONOBJ(JSONAdmin, "Admin");
         }catch (Exception e){
             e.printStackTrace();
         }
