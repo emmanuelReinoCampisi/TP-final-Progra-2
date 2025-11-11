@@ -8,7 +8,9 @@
     import Excepciones.ExcepcionYaExistente;
 
     import java.time.LocalDate;
+    import java.time.LocalDateTime;
     import java.time.LocalTime;
+    import java.time.chrono.ChronoLocalDate;
     import java.util.Iterator;
 
     public class Veterinaria {
@@ -153,5 +155,58 @@
             }
             return mensaje;
         }
+
+
+        public void cancelarCita(LocalDate fecha, LocalTime horario, int dniVet)throws CitaInvalidaExcep{
+
+            Cita citaCancelar = null;
+
+            Iterator<Cita> it = Citas.getIterator();
+            while(it.hasNext()) {
+                Cita c= it.next();
+
+                if(c.getFecha().equals(fecha)&&c.getHorario().equals(horario)&& c.getVeterinario_dni() == dniVet) {
+                    citaCancelar=c;
+                    it.remove();
+                }
+            }
+
+            if(citaCancelar==null){
+                throw new CitaInvalidaExcep("Cita no encontrada");
+            }
+
+            Empleado vet = Personal.obtenerPorIdentificador(dniVet);
+
+            if(vet instanceof Veterinario){
+                Veterinario vetCancelar = (Veterinario)vet;
+                vetCancelar.cancelarCita(citaCancelar);
+                System.out.println("se cancelo la cita");
+            }
+        }
+
+
+
+      public String listarCitasPendientes()throws ExcepcionNoExistente{
+            LocalDate fecha = LocalDate.now();
+            String mensaje = "";
+            boolean citasPendientes = false;
+            Iterator<Cita> it = Citas.getIterator();
+            while(it.hasNext()) {
+                Cita c= it.next();
+                if(c.getFecha().equals(fecha)|| c.getFecha().isAfter(fecha)) {
+                    mensaje=c.toString();
+                    citasPendientes=true;
+                }
+            }
+
+            if(citasPendientes==false){
+                throw new ExcepcionNoExistente("No hay citas pendientes");
+            }
+
+            return mensaje;
+      }
+
+
+
 
     }

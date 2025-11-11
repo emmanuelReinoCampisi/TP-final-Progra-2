@@ -8,8 +8,11 @@ import Excepciones.ExcepcionYaExistente;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 
 public class Veterinario extends Empleado {
     private String matricula;
@@ -79,7 +82,15 @@ public class Veterinario extends Empleado {
         return seElimino;
     }
 
-
+    public void cancelarCita(Cita cita){
+        Iterator<Cita> it = citas.iterator();
+        while (it.hasNext()) {
+            Cita c = it.next();
+            if(c.equals(cita)){
+                it.remove();
+            }
+        }
+    }
 
     public JSONObject TOJSON(){
         JSONObject empleadoJSON = new JSONObject();
