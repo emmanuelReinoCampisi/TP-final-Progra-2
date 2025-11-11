@@ -21,6 +21,7 @@ public class Cita implements Identificable{
     private int mascota_id;
     private ESTADOCITA estadoCita;
     private int veterinario_dni;
+    private String diagnostico;
 
 
 /// Constructor general
@@ -42,6 +43,14 @@ public class Cita implements Identificable{
         this.mascota_id = mascota_id;
         this.estadoCita = estadoCita;
         this.veterinario_dni = veterinario_dni;
+    }
+
+    public String getDiagnostico() {
+        return diagnostico;
+    }
+
+    public void setDiagnostico(String diagnostico) {
+        this.diagnostico = diagnostico;
     }
 
     public void setMascota_id(int mascota_id) {
@@ -126,7 +135,7 @@ public class Cita implements Identificable{
                 ", motivo='" + motivo + '\'' +
                 ", id_mascota" + mascota_id +
                 ", estadoCita=" + estadoCita +
-                ", dni_veterinario" + veterinario_dni +
+                ", dni_veterinario" + veterinario_dni + (diagnostico != null ? diagnostico  : "") +
                 '}';
     }
 
@@ -139,6 +148,7 @@ public class Cita implements Identificable{
          citaJSON.put("estado_cita",estadoCita);
         citaJSON.put("id_mascota", mascota_id); // Se paso solamente el ID de la mascota para evitar un bucle donde citaTOJson llame a mascotaTOJson para que esta llame a citaTOJson nuevamente
         citaJSON.put("dni_veterinario", veterinario_dni);
+        citaJSON.put("diagnostico", diagnostico);
         return citaJSON;
     }
 

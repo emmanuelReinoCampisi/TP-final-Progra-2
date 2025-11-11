@@ -122,6 +122,26 @@
         }
 
 
+        public void asignarDiagnostico(int idCita, int dniVet, String diagnostico)throws ExcepcionNoExistente{
+
+            boolean citaEncontrada = false;
+
+            Iterator<Cita> it = Citas.getIterator();
+            while(it.hasNext()) {
+                Cita c = it.next();
+                if(c.getId() == idCita && c.getVeterinario_dni() == dniVet){
+
+                    c.setDiagnostico(diagnostico);
+                    citaEncontrada = true;
+                }
+            }
+
+            if(!citaEncontrada){
+                throw new ExcepcionNoExistente("No se encontro la cita para asignar el diagnostico");
+            }
+
+        }
+
         public String buscarDuenioPorDNI(int dni)
         {
             String lista = "";
