@@ -1,5 +1,7 @@
 package Clases;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class Duenio extends Persona {
@@ -84,5 +86,16 @@ public class Duenio extends Persona {
             System.out.println("Excepciones.ExcepcionColeccionVacia");
         }
         return seElimino;
+    }
+
+    public JSONObject TOJSON(){
+        JSONObject duenioJSON = new JSONObject();
+        duenioJSON.put("nombre",getNombre());
+        duenioJSON.put("edad",getEdad());
+        duenioJSON.put("dni",getDni());
+        duenioJSON.put("telefono",telefono);
+        duenioJSON.put("direccion",direccion);
+
+        return duenioJSON;
     }
 }

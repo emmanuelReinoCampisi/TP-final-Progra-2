@@ -1,5 +1,7 @@
 package Clases;
 
+import org.json.JSONObject;
+
 import java.util.Objects;
 
 
@@ -56,4 +58,6 @@ public abstract class Persona implements Identificable {
     public int getId() {
         return this.dni;
     }
+
+    public abstract JSONObject TOJSON();
 }

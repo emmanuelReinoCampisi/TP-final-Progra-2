@@ -5,6 +5,8 @@ import Enumeradores.TURNO;
 import Excepciones.ExcepcionColeccionVacia;
 import Excepciones.ExcepcionNoExistente;
 import Excepciones.ExcepcionYaExistente;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -77,4 +79,26 @@ public class Veterinario extends Empleado {
     }
 
 
+    public JSONObject TOJSON(){
+        JSONObject empleadoJSON = new JSONObject();
+        JSONArray especialidadesARRAY = new JSONArray();
+        JSONArray citasARRAY = new JSONArray();
+        for (ESPECIE e: especialidades){
+            especialidadesARRAY.put(e.toString());
+        }
+        for(Cita c: citas){
+            citasARRAY.put(c.citaTOJson());
+        }
+        empleadoJSON.put("nombre",getNombre());
+        empleadoJSON.put("edad",getEdad());
+        empleadoJSON.put("dni",getDni());
+        empleadoJSON.put("email",getEmail());
+        empleadoJSON.put("contrasenia",getContrasenia());
+        empleadoJSON.put("turno",getTurno());
+        empleadoJSON.put("cuenta_activa",isCuenta_activa());
+        empleadoJSON.put("matricula",matricula);
+        empleadoJSON.put("especialidades",especialidadesARRAY);
+        empleadoJSON.put("citas",citasARRAY);
+        return empleadoJSON;
+    }
 }
