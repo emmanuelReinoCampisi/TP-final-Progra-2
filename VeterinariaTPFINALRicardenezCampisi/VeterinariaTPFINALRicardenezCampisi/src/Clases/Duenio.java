@@ -98,4 +98,17 @@ public class Duenio extends Persona {
 
         return duenioJSON;
     }
+
+    public static Duenio duenioFROMJson(JSONObject duenioJSON){
+        Duenio duenio = null;
+
+        String nombre = duenioJSON.getString("nombre");
+        int edad = duenioJSON.getInt("edad");
+        int dni = duenioJSON.getInt("dni");
+        int telefono = duenioJSON.getInt("telefono");
+        String direccion = duenioJSON.getString("direccion");
+
+        duenio = new Duenio(nombre,edad,dni,telefono,direccion);
+        return duenio;
+    }
 }

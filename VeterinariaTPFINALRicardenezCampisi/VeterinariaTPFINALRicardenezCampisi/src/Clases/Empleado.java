@@ -1,6 +1,7 @@
 package Clases;
 
 import Enumeradores.TURNO;
+import Excepciones.ExcepcionYaExistente;
 import org.json.JSONObject;
 
 public class Empleado extends Persona{
@@ -17,6 +18,13 @@ public class Empleado extends Persona{
         this.cuenta_activa = false; /// al crear la cuenta se settea en true
     }
 
+    public Empleado(String nombre, int edad, int dni, String email, String contrasenia, TURNO turno, boolean cuenta_activa) {
+        super(nombre, edad, dni);
+        this.email = email;
+        this.contrasenia = contrasenia;
+        this.turno = turno;
+        this.cuenta_activa = cuenta_activa; /// al crear la cuenta se settea en true
+    }
     public String getEmail() {
         return email;
     }
@@ -57,5 +65,19 @@ public class Empleado extends Persona{
         empleadoJSON.put("turno",turno);
         empleadoJSON.put("cuenta_activa",cuenta_activa);
         return empleadoJSON;
+    }
+
+    public static Empleado empleadoFROMJson(JSONObject empleadoJSON) {
+        Empleado empleado = null;
+        String nombre = empleadoJSON.getString("nombre");
+        int edad = empleadoJSON.getInt("edad");
+        int dni = empleadoJSON.getInt("dni");
+        String email = empleadoJSON.getString("email");
+        String contrasenia = empleadoJSON.getString("contrasenia");
+        TURNO turno = TURNO.valueOf(empleadoJSON.getString("turno"));
+        boolean cuenta_activa = empleadoJSON.getBoolean("cuenta_activa");
+
+        empleado = new Empleado(nombre,edad,dni,email,contrasenia,turno,cuenta_activa);
+        return empleado;
     }
 }

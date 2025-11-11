@@ -23,7 +23,12 @@ public class Veterinario extends Empleado {
         this.citas = new HashSet<>();
     }
 
-
+    public Veterinario(String nombre, int edad, int dni, String email, String contrasenia, TURNO turno,boolean cuenta_activa, String matricula) {
+        super(nombre, edad, dni, email, contrasenia, turno, cuenta_activa);
+        this.matricula = matricula;
+        this.especialidades = new ArrayList<>();
+        this.citas = new HashSet<>();
+    }
     public void asignarCita(Cita cita){
         citas.add(cita);
     }
@@ -100,5 +105,35 @@ public class Veterinario extends Empleado {
         empleadoJSON.put("especialidades",especialidadesARRAY);
         empleadoJSON.put("citas",citasARRAY);
         return empleadoJSON;
+    }
+
+    public static Veterinario veterinarioFROMJson(JSONObject veterinarioJSON) throws ExcepcionYaExistente{
+        Veterinario veterinario = null;
+
+        String nombre = veterinarioJSON.getString("nombre");
+        int edad = veterinarioJSON.getInt("edad");
+        int dni = veterinarioJSON.getInt("dni");
+        String email = veterinarioJSON.getString("email");
+        String contrasenia = veterinarioJSON.getString("contrasenia");
+        TURNO turno = TURNO.valueOf(veterinarioJSON.getString("turno"));
+        boolean cuenta_activa = veterinarioJSON.getBoolean("cuenta_activa");
+        String matricula = veterinarioJSON.getString("matricula");
+
+        veterinario = new Veterinario(nombre,edad,dni,email,contrasenia,turno,cuenta_activa,matricula);
+
+        JSONArray especialidadesArray = veterinarioJSON.getJSONArray("especialidades");
+        for(int i = 0; i<especialidadesArray.length();i++){
+            ESPECIE especie = ESPECIE.valueOf(especialidadesArray.getString(i));
+            veterinario.agregarEspecialidad(especie); ///Linea de codigo que tira ya existente
+        }
+
+        JSONArray citasArray = veterinarioJSON.getJSONArray("citas");
+        for (int i = 0;i<citasArray.length(); i++){
+            JSONObject citaJSON = citasArray.getJSONObject(i);
+
+            Cita cita = Cita.citaFROMJson(citaJSON);
+            veterinario.asignarCita(cita);
+        }
+        return  veterinario;
     }
 }

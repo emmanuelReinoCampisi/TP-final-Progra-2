@@ -47,7 +47,7 @@
             return lista += Personal.listar();
         }
 
-    public void agregarCita (LocalDate fecha, LocalTime horario, TIPOCITA motivo, Mascota mascota, ESTADOCITA estadoCita, Veterinario veterinario)throws CitaInvalidaExcep {
+    /*public void agregarCita (LocalDate fecha, LocalTime horario, TIPOCITA motivo, Mascota mascota, ESTADOCITA estadoCita, Veterinario veterinario)throws CitaInvalidaExcep {
             Cita c = new Cita(fecha, horario, motivo, mascota, estadoCita,veterinario);
 
             if(c.getFecha().isBefore(LocalDate.now())){
@@ -90,7 +90,7 @@
         // si no se solapa con ninguna existente y es veterinario esta libre la agrega
         Citas.agregar(c);
         veterinario.asignarCita(c); // le asignamos la cita al veterinario
-    }
+    }*/ /// Este metodo de aca se tendria que rehacer con los cambios a cita
 
 
 

@@ -60,4 +60,5 @@ public abstract class Persona implements Identificable {
     }
 
     public abstract JSONObject TOJSON();
+
 }

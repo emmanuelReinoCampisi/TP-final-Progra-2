@@ -28,6 +28,16 @@ public class Mascota {
         this.historialClinico = new HashSet<>();
     }
 
+    public Mascota(int id,String nombre, int edad, ESPECIE especie, String raza, int dniDuenio) {
+        this.ID = id;
+        this.nombre = nombre;
+        this.edad = edad;
+        this.especie = especie;
+        this.raza = raza;
+        this.dniDuenio = dniDuenio;
+        this.historialClinico = new HashSet<>();
+    }
+
     public int getID() {
         return ID;
     }
@@ -67,6 +77,14 @@ public class Mascota {
 
     public int getDniDuenio() {
         return dniDuenio;
+    }
+
+    public void setDniDuenio(int dniDuenio) {
+        this.dniDuenio = dniDuenio;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     @Override
@@ -136,14 +154,36 @@ public class Mascota {
     public JSONObject mascotaTOJson(){
         JSONObject mascotaJSON = new JSONObject();
         JSONArray citasJArray = new JSONArray();
+        mascotaJSON.put("id_mascota",ID);
         mascotaJSON.put("nombre",nombre);
         mascotaJSON.put("edad",edad);
         mascotaJSON.put("especie",especie);
         mascotaJSON.put("raza",raza);
+        mascotaJSON.put("dni_duenio",dniDuenio);
         for(Cita c: this.historialClinico){
             citasJArray.put(c.citaTOJson());
         }
-        mascotaJSON.put("dni_duenio",dniDuenio);
+        mascotaJSON.put("citas",citasJArray);
         return mascotaJSON;
+    }
+
+    public static Mascota mascotaFROMJson(JSONObject mascotaJSON){/// Uso un nuevo constructor donde no se incrementa
+        Mascota mascota = null;                                   /// el id de manera automatica para evitar que se creen ids fantasmas
+        int id_mascota = mascotaJSON.getInt("id_mascota");
+        String nombre = mascotaJSON.getString("nombre");
+        int edad = mascotaJSON.getInt("edad");
+        ESPECIE especie = ESPECIE.valueOf(mascotaJSON.getString("especie"));
+        String raza = mascotaJSON.getString("raza");
+        int dni_duenio = mascotaJSON.getInt("dni_duenio");
+
+        mascota = new Mascota(id_mascota,nombre,edad,especie,raza,dni_duenio);
+        JSONArray citasArray = mascotaJSON.getJSONArray("citas");
+        for(int i = 0; i<citasArray.length(); i++){
+            JSONObject citaJSON = citasArray.getJSONObject(i);
+            Cita cita = Cita.citaFROMJson(citaJSON);
+            mascota.agregarCita(cita);
+        }
+
+        return mascota;
     }
 }
