@@ -46,7 +46,7 @@ public class Duenio extends Persona {
         StringBuilder sb = new StringBuilder(" ");
 
         for(Mascota m: mascotas){
-            if(m.getNombre().equals(nombreMascota)){
+            if(m.getNombre().equalsIgnoreCase(nombreMascota)){
                 sb.append(m).append("\n");
             }
         }

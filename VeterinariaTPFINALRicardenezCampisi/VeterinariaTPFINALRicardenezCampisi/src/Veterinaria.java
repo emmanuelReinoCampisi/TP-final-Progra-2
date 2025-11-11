@@ -32,9 +32,10 @@
             Empleado empleado = new Empleado(nombre, edad, dni, email, contrasenia, turno);
             try{
                     if(Personal.existe(empleado)){
-                        Personal.agregar(empleado);
-                    }else{
                         throw new ExcepcionYaExistente("Empleado existente");
+                    }else{
+
+                        Personal.agregar(empleado);
                     }
 
             }catch (ExcepcionYaExistente e){
@@ -127,5 +128,30 @@
             return lista = Personal.buscarPorId(dni);
         }
 
+        public String listarMascotas(int dni) {
+            String mensaje = "";
+            Duenio d = Duenios.obtenerPorIdentificador(dni);
+            if (d != null) {
+                Iterator<Duenio> it = Duenios.getIterator();
+                while (it.hasNext()) {
+                    Duenio duenio = it.next();
+                    mensaje+=duenio.listarMascotas();
+                }
+            }
+            return mensaje;
+        }
+
+        public String listarMascotasEspecifica(int dni, String nombreMascota) {
+            String mensaje = "";
+            Duenio d = Duenios.obtenerPorIdentificador(dni);
+            if (d != null) {
+                Iterator<Duenio> it = Duenios.getIterator();
+                while (it.hasNext()) {
+                    Duenio duenio = it.next();
+                    mensaje= duenio.listarMascotasEspecifica(nombreMascota);
+                }
+            }
+            return mensaje;
+        }
 
     }

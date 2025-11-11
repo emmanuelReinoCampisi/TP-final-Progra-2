@@ -50,11 +50,6 @@ public abstract class Persona implements Identificable {
     }
 
     @Override
-    public String getIdentificador() {
-        return this.nombre;
-    }
-
-    @Override
     public int getId() {
         return this.dni;
     }

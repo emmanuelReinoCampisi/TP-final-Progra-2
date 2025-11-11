@@ -20,7 +20,7 @@ public class Main {
         Veterinaria veterinaria = new Veterinaria();
         boolean salir = false;
 
-        System.out.println("🐾----Bienvenido al sistema de: "+veterinaria.getNombre()+" ----🐾");
+        System.out.println("🐾----Bienvenido al sistema de: "+ Veterinaria.getNombre()+" ----🐾");
         while(!salir){
             System.out.println("💠 MENU PRINCIPAL 💠");
             System.out.println("1. Ingresar como Recepcionista");
@@ -112,4 +112,5 @@ public class Main {
             System.out.println(""+c.getMessage());
         }
     }
+
 }

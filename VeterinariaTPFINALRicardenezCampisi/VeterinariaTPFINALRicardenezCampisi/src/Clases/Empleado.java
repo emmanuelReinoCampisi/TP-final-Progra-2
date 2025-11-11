@@ -50,9 +50,8 @@ public class Empleado extends Persona{
         return cuenta_activa;
     }
 
-    @Override
-    public String getIdentificador() {
-        return this.email;
+    public void setCuenta_activa(boolean cuenta_activa) {
+        this.cuenta_activa = cuenta_activa;
     }
 
     public JSONObject TOJSON(){
