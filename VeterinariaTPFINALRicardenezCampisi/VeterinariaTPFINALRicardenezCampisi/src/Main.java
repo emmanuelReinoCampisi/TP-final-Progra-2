@@ -74,7 +74,7 @@ public class Main {
                                 break;
 
                             default:
-                                System.out.println("Opcion inavlida, ingrese una nueva opcion...");
+                                System.out.println("Opcion inavalida, ingrese una nueva opcion...");
                                 break;
 
                         }

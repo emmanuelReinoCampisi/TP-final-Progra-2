@@ -42,6 +42,16 @@ public class Validaciones {
         return contraseniaValida;
     }
 
+    public boolean validarMismoEmail(String mailUno, String mailDos)throws ExcepcionNoCoincide{ /// EXC valida?
+        boolean mismoEmail = false;
+
+        if(mailUno.equalsIgnoreCase(mailDos)){
+            mismoEmail = true;
+        } else {
+            throw new ExcepcionNoCoincide("El mail no coincide");
+        }
+        return mismoEmail;
+    }
     public boolean validarMismaContrasenia(String contraseniaUno, String contraseniaDos)throws ExcepcionNoCoincide{
         boolean mismaContrasenia = false;
 
