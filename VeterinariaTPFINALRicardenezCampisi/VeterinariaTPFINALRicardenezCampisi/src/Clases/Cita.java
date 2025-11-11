@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
-public class Cita {
+public class Cita implements Identificable{
     private int idCita;
     private static int contador = 1000;
     private LocalDate fecha;
@@ -20,36 +20,36 @@ public class Cita {
     /// hay motivos predefinidos mas generales
     private int mascota_id;
     private ESTADOCITA estadoCita;
-    private int veterinario_id;
+    private int veterinario_dni;
 
 
 /// Constructor general
-    public Cita(LocalDate fecha, LocalTime horario, TIPOCITA motivo, ESTADOCITA estadoCita,int mascota_id, int veterinario_id) {
+    public Cita(LocalDate fecha, LocalTime horario, TIPOCITA motivo, ESTADOCITA estadoCita,int mascota_id, int veterinario_dni) {
         this.idCita = ++contador;
         this.fecha = fecha;
         this.horario = horario;
         this.motivo = motivo;
         this.mascota_id = mascota_id;
         this.estadoCita = estadoCita;
-        this.veterinario_id = veterinario_id;
+        this.veterinario_dni = veterinario_dni;
     }
 /// Constructor para el fromJSON
-    public Cita(int id, LocalDate fecha, LocalTime horario, TIPOCITA motivo, ESTADOCITA estadoCita, int mascota_id, int veterinario_id) {
+    public Cita(int id, LocalDate fecha, LocalTime horario, TIPOCITA motivo, ESTADOCITA estadoCita, int mascota_id, int veterinario_dni) {
         this.idCita = id;
         this.fecha = fecha;
         this.horario = horario;
         this.motivo = motivo;
         this.mascota_id = mascota_id;
         this.estadoCita = estadoCita;
-        this.veterinario_id = veterinario_id;
+        this.veterinario_dni = veterinario_dni;
     }
 
     public void setMascota_id(int mascota_id) {
         this.mascota_id = mascota_id;
     }
 
-    public void setVeterinario_id(int veterinario_id) {
-        this.veterinario_id = veterinario_id;
+    public void setVeterinario_id(int veterinario_dni) {
+        this.veterinario_dni = veterinario_dni;
     }
 
     public void setIdCita(int idCita) {
@@ -88,8 +88,9 @@ public class Cita {
         this.horario = horario;
     }
 
-    public int getIdCita() {
-        return idCita;
+    @Override
+    public int getId() {
+        return this.idCita;
     }
 
     public LocalTime getFinCita(){
@@ -100,8 +101,8 @@ public class Cita {
         return mascota_id;
     }
 
-    public int getVeterinario_id() {
-        return veterinario_id;
+    public int getVeterinario_dni() {
+        return veterinario_dni;
     }
 
     @Override
@@ -125,7 +126,7 @@ public class Cita {
                 ", motivo='" + motivo + '\'' +
                 ", id_mascota" + mascota_id +
                 ", estadoCita=" + estadoCita +
-                ", id_veterinario" + veterinario_id +
+                ", dni_veterinario" + veterinario_dni +
                 '}';
     }
 
@@ -137,7 +138,7 @@ public class Cita {
         citaJSON.put("motivo",motivo);
          citaJSON.put("estado_cita",estadoCita);
         citaJSON.put("id_mascota", mascota_id); // Se paso solamente el ID de la mascota para evitar un bucle donde citaTOJson llame a mascotaTOJson para que esta llame a citaTOJson nuevamente
-        citaJSON.put("id_veterinario", veterinario_id);
+        citaJSON.put("dni_veterinario", veterinario_dni);
         return citaJSON;
     }
 
@@ -153,13 +154,13 @@ public class Cita {
         TIPOCITA motivo = TIPOCITA.valueOf(citaJSON.getString("motivo"));
         ESTADOCITA estadocita = ESTADOCITA.valueOf(citaJSON.getString("estado_cita"));
         int id_mascota = citaJSON.getInt("id_mascota");
-        int id_veterinario = citaJSON.getInt("id_veterinario");
+        int dni_veterinario = citaJSON.getInt("dni_veterinario");
 
-        cita = new Cita(id_cita,fecha,horario,motivo,estadocita,id_mascota,id_veterinario);
+        cita = new Cita(id_cita,fecha,horario,motivo,estadocita,id_mascota,dni_veterinario);
         return cita;
     }
 
-    public int getId() {
-        return this.idCita;
-    }
+
+
+
 }

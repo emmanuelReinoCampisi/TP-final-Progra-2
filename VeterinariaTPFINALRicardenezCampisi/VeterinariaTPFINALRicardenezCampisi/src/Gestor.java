@@ -18,6 +18,15 @@ public class Gestor <T extends Identificable>  {
         return elementos.contains(e);
     }
 
+    public T obtenerPorIdentificador(int dniABuscar){
+        for(T e: elementos){
+            if(e.getId() ==dniABuscar){
+                return e;
+            }
+        }
+        return null;
+    }
+
     public String listar(){
         StringBuilder sb = new StringBuilder(" ");
         for (T elemento: elementos){
@@ -25,6 +34,8 @@ public class Gestor <T extends Identificable>  {
         }
         return sb.toString();
     }
+
+
 
 public Iterator <T> getIterator(){
 
@@ -40,15 +51,7 @@ public Iterator <T> getIterator(){
     }
 
 
-    public String buscarPorIdentificador(String identificador) // con este buscamos por mail o matricula del empleado
-    {
-        String mensaje = "";
-        for(T t: elementos){
-            if(t.getIdentificador().equals(identificador)){
 
-                mensaje+=t.toString();
-            }
-        }
-        return mensaje;
-    }
+
+
 }

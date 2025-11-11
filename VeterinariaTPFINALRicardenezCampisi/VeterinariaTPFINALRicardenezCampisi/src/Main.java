@@ -86,7 +86,7 @@ public class Main {
         Veterinario Vettester2 =new Veterinario("Pedro",31,412,"pepe533@gmail.com","654", TURNO.TARDE,"Veterinario");
         Mascota TobyTester = new Mascota("TobyTester",2, ESPECIE.CANINO,"Rottweiler",11223344);
         Mascota CocoTester = new Mascota("CocoTester",1, ESPECIE.CANINO,"Pastor Aleman",11223344);
-        Cita cita = new Cita (fechaCita,horarioCita, TIPOCITA.CONTROL, ESTADOCITA.PENDIENTE, TobyTester.getID(),Vettester.getId());
+        Cita cita = new Cita (fechaCita,horarioCita, TIPOCITA.CONTROL, ESTADOCITA.PENDIENTE, TobyTester.getID(),Vettester.getDni());
 
         System.out.println(cita.toString());
 

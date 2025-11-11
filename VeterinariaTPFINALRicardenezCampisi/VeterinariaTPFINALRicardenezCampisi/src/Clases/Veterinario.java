@@ -37,6 +37,7 @@ public class Veterinario extends Empleado {
     }
 
 
+
     public String listarEspecialidades() throws ExcepcionColeccionVacia {
         StringBuilder sb = new StringBuilder(" ");
     if(!especialidades.isEmpty()) {

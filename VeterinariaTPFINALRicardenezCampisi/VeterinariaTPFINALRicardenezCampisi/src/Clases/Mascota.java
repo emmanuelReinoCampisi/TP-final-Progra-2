@@ -28,6 +28,7 @@ public class Mascota {
         this.historialClinico = new HashSet<>();
     }
 
+    /// los segundos constructores son para agarrar del fromJSON
     public Mascota(int id,String nombre, int edad, ESPECIE especie, String raza, int dniDuenio) {
         this.ID = id;
         this.nombre = nombre;

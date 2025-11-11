@@ -4,6 +4,7 @@
     import Enumeradores.TIPOCITA;
     import Enumeradores.TURNO;
     import Excepciones.CitaInvalidaExcep;
+    import Excepciones.ExcepcionNoExistente;
     import Excepciones.ExcepcionYaExistente;
 
     import java.time.LocalDate;
@@ -47,8 +48,9 @@
             return lista += Personal.listar();
         }
 
-    /*public void agregarCita (LocalDate fecha, LocalTime horario, TIPOCITA motivo, Mascota mascota, ESTADOCITA estadoCita, Veterinario veterinario)throws CitaInvalidaExcep {
-            Cita c = new Cita(fecha, horario, motivo, mascota, estadoCita,veterinario);
+    public void agregarCita (LocalDate fecha, LocalTime horario, TIPOCITA motivo,int idMascota, ESTADOCITA estadoCita, int  dniVet)throws CitaInvalidaExcep, ExcepcionNoExistente {
+            Cita c = new Cita(fecha, horario, motivo, estadoCita,idMascota,dniVet);
+            Veterinario vet = (Veterinario) Personal.obtenerPorIdentificador(dniVet);
 
             if(c.getFecha().isBefore(LocalDate.now())){
                 throw new CitaInvalidaExcep("Fecha invalida");
@@ -59,7 +61,7 @@
         // ahora vamos a comprobar que este el horario dispo y el veterinario tambien
 
         Iterator <Cita> it = Citas.getIterator();
-        while(it.hasNext()){
+        while(it.hasNext()) {
             Cita c2 = it.next(); // citas existentes
 
             LocalTime horarioInicioExistente = c2.getHorario(); // tomamos el horario que arranca
@@ -67,31 +69,35 @@
 
             // verifico la fecha de la cita
             if (c.getFecha().equals(c2.getFecha())) {
-                // comprobar que el veterinario este libre
-                if (c2.getVeterinarioAcargo().equals(veterinario)) {
+                // comprobar que el veterinario este libre/exista
+                if (vet != null) {
+                    if (c2.getVeterinario_dni() == dniVet) {
 
-                    boolean vetOcupado = c.getHorario().isBefore(horarioFinExistente) && finCitaNueva.isAfter(horarioInicioExistente);
-                    if (vetOcupado) {
-                        throw new CitaInvalidaExcep("Veterinario ocupado en ese dia y horario: " + c.getMotivo());
+                        boolean vetOcupado = c.getHorario().isBefore(horarioFinExistente) && finCitaNueva.isAfter(horarioInicioExistente);
+                        if (vetOcupado) {
+                            throw new CitaInvalidaExcep("Veterinario ocupado en ese dia y horario: " + c.getMotivo());
+                        }
                     }
-                }
-                // verifico que la mascota no tenga ninguna cita agendada en esa fecha y horario
-                if (c2.getMascota().equals(mascota)) {
+                    // verifico que la mascota no tenga ninguna cita agendada en esa fecha y horario
+                    if (c2.getMascota_id() == idMascota) {
 
-                    boolean mascotaAsig = c.getHorario().isBefore(horarioFinExistente) && finCitaNueva.isAfter(horarioInicioExistente);
-                    if (mascotaAsig) {
-                        throw new CitaInvalidaExcep("La mascota ya tiene una cita en ese dia y horario: " + c.getMotivo());
+                        boolean mascotaAsig = c.getHorario().isBefore(horarioFinExistente) && finCitaNueva.isAfter(horarioInicioExistente);
+                        if (mascotaAsig) {
+                            throw new CitaInvalidaExcep("La mascota ya tiene una cita en ese dia y horario: " + c.getMotivo());
+                        }
                     }
-                }
 
+                }else {throw new ExcepcionNoExistente("Veterinario no existente");}
             }
 
         }
         // si no se solapa con ninguna existente y es veterinario esta libre la agrega
         Citas.agregar(c);
-        veterinario.asignarCita(c); // le asignamos la cita al veterinario
-    }*/ /// Este metodo de aca se tendria que rehacer con los cambios a cita
 
+        if(Personal.existe(vet)){
+            vet.asignarCita(c);
+        }
+    } /// Este metodo de aca se tendria que rehacer con los cambios a cita
 
 
         // metodo para agregar un duenio nuevo que no este cargado en el sistema
@@ -115,10 +121,10 @@
 
         }
 
-        public String buscarEmpleadoPorId(String identificador) /// aca lo que le vamos a mandar es el mail o matricula del empleado ya que son unicos
+        public String buscarEmpleadoPorDNI(int dni) /// aca lo que le vamos a mandar es el mail o matricula del empleado ya que son unicos
         {
             String lista = "";
-            return lista = Personal.buscarPorIdentificador(identificador);
+            return lista = Personal.buscarPorId(dni);
         }
 
 
