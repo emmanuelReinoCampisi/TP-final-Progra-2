@@ -167,7 +167,8 @@
 
                 if(c.getFecha().equals(fecha)&&c.getHorario().equals(horario)&& c.getVeterinario_dni() == dniVet) {
                     citaCancelar=c;
-                    it.remove();
+                    c.setEstadoCita(ESTADOCITA.CANCELADA);
+                    c.setHorario(null);
                 }
             }
 

@@ -1,6 +1,7 @@
 package Clases;
 
 import Enumeradores.ESPECIE;
+import Enumeradores.ESTADOCITA;
 import Enumeradores.TURNO;
 import Excepciones.ExcepcionColeccionVacia;
 import Excepciones.ExcepcionNoExistente;
@@ -87,9 +88,34 @@ public class Veterinario extends Empleado {
         while (it.hasNext()) {
             Cita c = it.next();
             if(c.equals(cita)){
-                it.remove();
+                c.setEstadoCita(ESTADOCITA.CANCELADA);
             }
         }
+    }
+
+    public String listarCitasPendientes(){
+        String mensaje = "";
+        Iterator<Cita> it = citas.iterator();
+        while (it.hasNext()) {
+            Cita c = it.next();
+            if(c.getEstadoCita() == ESTADOCITA.PENDIENTE){
+                mensaje += c.toString()+"\n";
+            }
+        }
+
+        return mensaje;
+    }
+
+    public String listarHistorialCitas(){
+        String mensaje = "";
+        Iterator<Cita> it = citas.iterator();
+        while (it.hasNext()) {
+            Cita c = it.next();
+                mensaje += c.toString()+"\n";
+
+        }
+
+        return mensaje;
     }
 
     public JSONObject TOJSON(){
