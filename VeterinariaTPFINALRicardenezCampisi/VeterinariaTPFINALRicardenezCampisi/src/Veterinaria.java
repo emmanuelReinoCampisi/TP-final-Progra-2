@@ -56,14 +56,14 @@
             return lista += Personal.listar();
         }
 
+
+
     public void agregarCita (LocalDate fecha, LocalTime horario, TIPOCITA motivo,int idMascota, ESTADOCITA estadoCita, int  dniVet)throws CitaInvalidaExcep, ExcepcionNoExistente {
             Cita c = new Cita(fecha, horario, motivo, estadoCita,idMascota,dniVet);
             Veterinario vet = (Veterinario) Personal.obtenerPorIdentificador(dniVet);
 
-            if(c.getFecha().isBefore(LocalDate.now())){
-                throw new CitaInvalidaExcep("Fecha invalida");
-            }
-
+            Validaciones.validarFecha(fecha);
+            Validaciones.validarHorarioRango(horario);
             LocalTime finCitaNueva = c.getHorario().plusMinutes(c.getMotivo().getDuracionMinutos()); /// calculamos el horario aproximado del fin de la cita que queremos cargar
 
         // ahora vamos a comprobar que este el horario dispo y el veterinario tambien
@@ -132,6 +132,7 @@
                 if(c.getId() == idCita && c.getVeterinario_dni() == dniVet){
 
                     c.setDiagnostico(diagnostico);
+                    c.setEstadoCita(ESTADOCITA.ATENDIDA);
                     citaEncontrada = true;
                 }
             }

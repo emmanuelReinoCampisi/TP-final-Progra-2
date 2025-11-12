@@ -1,5 +1,9 @@
+import Excepciones.CitaInvalidaExcep;
 import Excepciones.ExcepcionFormatoNoValido;
 import Excepciones.ExcepcionNoCoincide;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Validaciones {
 
@@ -62,4 +66,25 @@ public class Validaciones {
         }
         return mismaContrasenia;
     }
+
+    public static void validarFecha(LocalDate fecha) throws CitaInvalidaExcep {
+        if (fecha == null){
+            throw new CitaInvalidaExcep("Debe ingresar una fecha.");
+        } else if (fecha.isBefore(LocalDate.now())) {
+            throw new CitaInvalidaExcep("La fecha no puede ser anterior a hoy.");
+        }
+    }
+
+
+    public static void validarHorarioRango(LocalTime horario) throws CitaInvalidaExcep {
+        LocalTime inicio = LocalTime.of(8, 0);
+        LocalTime fin = LocalTime.of(19, 0);
+        if (horario == null){
+            throw new CitaInvalidaExcep("Debe ingresar un horario.");
+        } else if (horario.isBefore(inicio) || horario.isAfter(fin)) {
+            throw new CitaInvalidaExcep("El horario debe estar entre las 08:00 y las 19:00.");
+        }
+    }
+
+
 }
