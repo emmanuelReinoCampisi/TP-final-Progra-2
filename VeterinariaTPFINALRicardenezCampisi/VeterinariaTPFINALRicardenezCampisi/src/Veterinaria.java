@@ -56,7 +56,10 @@
             return lista += Personal.listar();
         }
 
-
+        public String listarDuenios(){
+            String lista = "";
+            return lista += Duenios.listar();
+        }
 
     public void agregarCita (LocalDate fecha, LocalTime horario, TIPOCITA motivo,int idMascota, ESTADOCITA estadoCita, int  dniVet)throws CitaInvalidaExcep, ExcepcionNoExistente {
             Cita c = new Cita(fecha, horario, motivo, estadoCita,idMascota,dniVet);

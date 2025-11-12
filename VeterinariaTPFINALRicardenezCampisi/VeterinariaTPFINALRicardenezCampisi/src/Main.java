@@ -7,6 +7,8 @@ import Enumeradores.ESTADOCITA;
 import Enumeradores.TIPOCITA;
 import Enumeradores.TURNO;
 import Excepciones.CitaInvalidaExcep;
+import Excepciones.ExcepcionNoExistente;
+import Excepciones.ExcepcionYaExistente;
 import org.json.JSONObject;
 
 import java.time.LocalDate;
@@ -15,7 +17,7 @@ import java.util.Scanner;
 
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ExcepcionYaExistente {
 
 
         Scanner sc = new Scanner(System.in);
@@ -121,7 +123,7 @@ public class Main {
                                 break;
                         }
                     } while (opcionVet != 4);
-                    /// MENU VETERINARIO
+                   
                     break;
 
                 case 3:
@@ -138,15 +140,51 @@ public class Main {
                         sc.nextLine();
                         switch (opcionAdmin) {
                             case 1:
+                                System.out.println("Ingrese el nombre del Empleado: ");
+                                String nombreE = sc.nextLine();
+                                System.out.println("Ingrese la edad del Empleado: ");
+                                int edadE = sc.nextInt();
+                                System.out.println("Ingrese el DNI del empleado: ");
+                                int dniE = sc.nextInt();
+                                System.out.println("Ingrese el email del nuevo empleado: ");
+                                String emailE = sc.nextLine();
+                                System.out.println("Ingrese la contraseña predefinida para el empleado: ");
+                                String contraE =  sc.nextLine();
+                                System.out.println("Seleccione el turno que va a ocupar el empleado: ");
+                                System.out.println("1. Turno mañana");
+                                System.out.println("2. Turno tarde");
+                                System.out.println("3. Turno noche");
+                                TURNO turnoSeleccionado = null;
+                                int opcionTurno = sc.nextInt();
+                                sc.nextLine();
+                                switch (opcionTurno) {
+                                    case 1:
+                                        turnoSeleccionado = TURNO.MANIANA;
+                                        break;
+                                    case 2:
+                                        turnoSeleccionado = TURNO.TARDE;
+                                        break;
+                                    case 3:
+                                        turnoSeleccionado = TURNO.NOCHE;
+                                        break;
 
+                                    default:
+                                        System.out.println("OPCION INCORRECTA");
+                                        break;
+                                }
+                                try {
+                                    veterinaria.agregarEmpleado(nombreE,edadE,dniE,emailE,contraE,turnoSeleccionado);
+                                }catch (ExcepcionYaExistente e) {
+                                    System.out.println(e.getMessage());
+                                }
                                 break;
 
                             case 2:
-
+                                System.out.println(veterinaria.listarEmpleados());
                                 break;
 
                             case 3:
-
+                                System.out.println(veterinaria.listarDuenios());
                                 break;
 
                             case 4:
@@ -198,7 +236,7 @@ public class Main {
         System.out.println(jsonObject);
 
 
-        try {    // asi tira eror por el veterinario ocupado
+        /*try {    // asi tira eror por el veterinario ocupado
             //veterinaria.agregarCita(fechaCita,horarioCita, TIPOCITA.CONTROL, TobyTester, ESTADOCITA.PENDIENTE,Vettester);
             //veterinaria.agregarCita(fechaCita,horarioCita, TIPOCITA.CONTROL, CocoTester, ESTADOCITA.PENDIENTE,Vettester);
 
@@ -213,7 +251,7 @@ public class Main {
 
         } catch (CitaInvalidaExcep c) {
             System.out.println("" + c.getMessage());
-        }
+        }*/
     }
 
 }
