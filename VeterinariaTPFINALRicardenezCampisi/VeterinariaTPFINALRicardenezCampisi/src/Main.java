@@ -18,7 +18,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws ExcepcionYaExistente {
-
+        System.out.println("Hacer dos listar empleados, uno con empleados activos y otros con empleados desactivados");
         System.out.println("Arranco");
         try {
             Veterinaria.veterinariaFROMJson(new JSONObject());
@@ -163,66 +163,66 @@ public class Main {
                                     opcionRegistro = sc.nextInt();
                                     switch (opcionRegistro) {
                                         case 1:
-                                        try {
-                                            System.out.println("===Creando recepcionista===");
-                                            //System.out.println("Ingrese 0 para cancelar el ingreso."); Falta agregar la cancelacion del ingreso
-                                            System.out.println("Ingrese el nombre del Empleado: ");
-                                            String nombreE = sc.nextLine();
+                                            try {
+                                                System.out.println("===Creando recepcionista===");
+                                                //System.out.println("Ingrese 0 para cancelar el ingreso."); Falta agregar la cancelacion del ingreso
+                                                System.out.println("Ingrese el nombre del Empleado: ");
+                                                String nombreE = sc.nextLine();
 
 
-                                            System.out.println("Ingrese la edad del Empleado: ");
-                                            int edadE = sc.nextInt();
-                                            Validaciones.validarEdad(edadE);
+                                                System.out.println("Ingrese la edad del Empleado: ");
+                                                int edadE = sc.nextInt();
+                                                Validaciones.validarEdad(edadE);
 
-                                            System.out.println("Ingrese el DNI del empleado: ");
-                                            int dniE = sc.nextInt();
-                                            sc.nextLine();
+                                                System.out.println("Ingrese el DNI del empleado: ");
+                                                int dniE = sc.nextInt();
+                                                sc.nextLine();
 
 
-                                            System.out.println("Ingrese el email del nuevo empleado: ");
-                                            String emailE = sc.nextLine();
-                                            Validaciones.validarFormatoEmail(emailE);
-                                            System.out.println("Ingrese la contraseña predefinida para el empleado: ");
-                                            String contraE = sc.nextLine();
-                                            Validaciones.validarFormatoContrasenia(contraE);
-                                            System.out.println("Confirme la contraseña.");
-                                            String contraConfirmadaE = sc.nextLine();
-                                            Validaciones.validarMismaContrasenia(contraE, contraConfirmadaE);
-                                            System.out.println("Seleccione el turno que va a ocupar el Empleado: ");
-                                            System.out.println("1. Turno mañana");
-                                            System.out.println("2. Turno tarde");
-                                            System.out.println("3. Turno noche");
-                                            TURNO turnoSeleccionadoE = null;
-                                            int opcionTurnoE = sc.nextInt();
-                                            sc.nextLine();
+                                                System.out.println("Ingrese el email del nuevo empleado: ");
+                                                String emailE = sc.nextLine();
+                                                Validaciones.validarFormatoEmail(emailE);
+                                                System.out.println("Ingrese la contraseña predefinida para el empleado: ");
+                                                String contraE = sc.nextLine();
+                                                Validaciones.validarFormatoContrasenia(contraE);
+                                                System.out.println("Confirme la contraseña.");
+                                                String contraConfirmadaE = sc.nextLine();
+                                                Validaciones.validarMismaContrasenia(contraE, contraConfirmadaE);
+                                                System.out.println("Seleccione el turno que va a ocupar el Empleado: ");
+                                                System.out.println("1. Turno mañana");
+                                                System.out.println("2. Turno tarde");
+                                                System.out.println("3. Turno noche");
+                                                TURNO turnoSeleccionadoE = null;
+                                                int opcionTurnoE = sc.nextInt();
+                                                sc.nextLine();
 
-                                            switch (opcionTurnoE) {
-                                                case 1:
-                                                    turnoSeleccionadoE = TURNO.MANIANA;
-                                                    break;
-                                                case 2:
-                                                    turnoSeleccionadoE = TURNO.TARDE;
-                                                    break;
-                                                case 3:
-                                                    turnoSeleccionadoE = TURNO.NOCHE;
-                                                    break;
+                                                switch (opcionTurnoE) {
+                                                    case 1:
+                                                        turnoSeleccionadoE = TURNO.MANIANA;
+                                                        break;
+                                                    case 2:
+                                                        turnoSeleccionadoE = TURNO.TARDE;
+                                                        break;
+                                                    case 3:
+                                                        turnoSeleccionadoE = TURNO.NOCHE;
+                                                        break;
 
-                                                default:
-                                                    System.out.println("OPCION INCORRECTA");
-                                                    break;
+                                                    default:
+                                                        System.out.println("OPCION INCORRECTA");
+                                                        break;
+                                                }
+
+                                                veterinaria.agregarEmpleado(nombreE, edadE, dniE, emailE, contraE, turnoSeleccionadoE);
+                                            } catch (ExcepcionYaExistente e) {
+                                                System.out.println(e.getMessage());
+                                            } catch (ExcepcionFormatoNoValido e) {
+                                                System.out.println(e.getMessage());
+                                            } catch (ExcepcionNoCoincide e) {
+                                                System.out.println(e.getMessage());
+                                            } catch (Exception e) {
+                                                System.out.println(e.getMessage());
                                             }
-
-                                            veterinaria.agregarEmpleado(nombreE, edadE, dniE, emailE, contraE, turnoSeleccionadoE);
-                                        } catch (ExcepcionYaExistente e) {
-                                            System.out.println(e.getMessage());
-                                        } catch (ExcepcionFormatoNoValido e) {
-                                            System.out.println(e.getMessage());
-                                        } catch (ExcepcionNoCoincide e) {
-                                            System.out.println(e.getMessage());
-                                        } catch (Exception e) {
-                                            System.out.println(e.getMessage());
-                                        }
-                                        break;
+                                            break;
                                         case 2:
                                             try {
                                                 sc.nextLine();
@@ -276,9 +276,9 @@ public class Main {
 
                                                 System.out.println("Ingrese la Matricula del Veterinario: ");
                                                 String matricula = sc.nextLine();
-                                                veterinaria.agregarVeterinario(nombreV, edadV, dniV, emailV, contraV, turnoSeleccionadoV,matricula);
+                                                veterinaria.agregarVeterinario(nombreV, edadV, dniV, emailV, contraV, turnoSeleccionadoV, matricula);
                                                 char seguirEspecialidades = 's';
-                                                while(seguirEspecialidades == 's') {
+                                                while (seguirEspecialidades == 's') {
                                                     System.out.println("Seleccione las especialidades del Veterinario: ");
                                                     System.out.println("1. Caninos");
                                                     System.out.println("2. Felinos");
@@ -329,21 +329,24 @@ public class Main {
                                     break;
 
                                 case 4:
-
+                                    System.out.println("===Desactivar cuenta===");
+                                    System.out.println("Ingrese el mail de la cuenta a desactivar");
+                                    String mailDesactivar = sc.nextLine();
+                                    if(veterinaria.desactivarCuenta(mailDesactivar)){
+                                        System.out.println("La cuenta " + mailDesactivar + " ha sido desactivada correctamente");
+                                    }
                                     break;
 
                                 case 5:
-
+                                    System.out.println("Cerrando sesion de administrador....");
                                     break;
 
                                 default:
-                                    System.out.println("Opcion inavlida, ingrese una nueva opcion...");
+                                    System.out.println("Opcion invalida, ingrese una nueva opcion...");
                                     break;
                             }
 
                         } while (opcionAdmin != 5);
-                    } else {
-                        opcion = -1;
                     }
                     break;
 

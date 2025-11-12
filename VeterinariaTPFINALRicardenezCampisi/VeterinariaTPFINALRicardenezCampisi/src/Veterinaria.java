@@ -365,7 +365,25 @@
                     ", Citas=" + Citas +
                     '}';
         }
+        public boolean ingresarEmpleado(String email, String contra)throws ExcepcionFormatoNoValido,ExcepcionNoExistente,ExcepcionNoCoincide{
+            boolean ingreso = false;
+            Validaciones.validarFormatoEmail(email);
+            Validaciones.validarFormatoContrasenia(contra);
 
+            Iterator<Empleado> it = Personal.getIterator();
+            while(it.hasNext()){
+                Empleado emp = it.next();
+                if(emp.getEmail().equalsIgnoreCase(email)){
+                    ingreso = true;
+                    Validaciones.validarMismaContrasenia(contra,emp.getContrasenia());
+                }
+            }
+            if(!ingreso){
+                throw new ExcepcionNoExistente("El email ingresado no se encuentra en el sistema");
+            }
+            return ingreso;
+        }
+        /// Metodos de admin
         public boolean ingresarAdmin(String email, String contrasenia){
             boolean ingresado = false;
             try {
@@ -378,6 +396,33 @@
                 System.out.println(e.getMessage());
             }
             return ingresado;
+        }
+
+        public boolean desactivarCuenta(String email){/// verificar si ya esta desactivada que no tire excepcion
+            boolean desactivado = false;///false: la cuenta no se desactivo | true: se desactivo
+            try{
+            Iterator<Empleado> it = Personal.getIterator();
+            while(it.hasNext()){
+                Empleado emp = it.next();
+                if(emp.getEmail().equalsIgnoreCase(email)){
+                    if(emp.isCuenta_activa() == false){
+                        throw new ExcepcionNoCoincide("La cuenta ya se encuentra desactivada");
+                    }
+                    emp.setCuenta_activa(false);
+                    desactivado = true;
+                }
+            }
+            if(!desactivado){
+                throw new ExcepcionNoExistente("No se encontro el mail");
+            }
+            } catch(ExcepcionNoExistente e){
+                System.out.println(e.getMessage());
+            } catch (ExcepcionNoCoincide e){
+                System.out.println(e.getMessage());
+            } catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+            return desactivado;
         }
         public void cargarVetJSON(String nombreArchivo){
             JSONObject jsonVet = this.toJSONVET();
