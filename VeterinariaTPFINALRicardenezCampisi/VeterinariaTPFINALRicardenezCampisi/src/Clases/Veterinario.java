@@ -41,6 +41,14 @@ public class Veterinario extends Empleado {
     }
 
 
+    @Override
+    public String toString() {
+        return super.getClass().getSimpleName() + "{ " + super.toString() +
+                "matricula='" + matricula + '\'' +
+                ", especialidades=" + especialidades +
+                ", citas=" + citas +
+                '}';
+    }
 
     public String listarEspecialidades() throws ExcepcionColeccionVacia {
         StringBuilder sb = new StringBuilder(" ");

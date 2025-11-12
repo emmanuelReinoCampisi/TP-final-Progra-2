@@ -9,7 +9,7 @@ public class Validaciones {
 
     private static final String regexPermitidos = "^[a-zA-Z0-9.]+$";
 
-    public boolean validarFormatoEmail(String email)throws ExcepcionFormatoNoValido{
+    public static boolean validarFormatoEmail(String email)throws ExcepcionFormatoNoValido{
         boolean emailValido = false;
         if(email.endsWith("@gmail.com")){
             String nombreUsuario = email.substring(0,email.length() - 10);
@@ -35,7 +35,7 @@ public class Validaciones {
         return emailValido;
     }
 
-    public boolean validarFormatoContrasenia(String contrasenia)throws ExcepcionFormatoNoValido{
+    public static boolean validarFormatoContrasenia(String contrasenia)throws ExcepcionFormatoNoValido{
         boolean contraseniaValida = false;
 
         if(contrasenia.length()<6 || contrasenia.length()>15){
@@ -46,7 +46,7 @@ public class Validaciones {
         return contraseniaValida;
     }
 
-    public boolean validarMismoEmail(String mailUno, String mailDos)throws ExcepcionNoCoincide{ /// EXC valida?
+    public static boolean validarMismoEmail(String mailUno, String mailDos)throws ExcepcionNoCoincide{ /// EXC valida?
         boolean mismoEmail = false;
 
         if(mailUno.equalsIgnoreCase(mailDos)){
@@ -56,7 +56,7 @@ public class Validaciones {
         }
         return mismoEmail;
     }
-    public boolean validarMismaContrasenia(String contraseniaUno, String contraseniaDos)throws ExcepcionNoCoincide{
+    public static boolean validarMismaContrasenia(String contraseniaUno, String contraseniaDos)throws ExcepcionNoCoincide{
         boolean mismaContrasenia = false;
 
         if(contraseniaUno.equals(contraseniaDos)){
@@ -86,5 +86,13 @@ public class Validaciones {
         }
     }
 
-
+    public static boolean validarEdad(int edad) throws ExcepcionFormatoNoValido {
+        boolean esMayor = false;
+        if(edad<18){
+            throw new ExcepcionFormatoNoValido ("La persona debe tener 18 años o mas.");
+        } else{
+            esMayor = true;
+        }
+        return esMayor;
+    }
 }

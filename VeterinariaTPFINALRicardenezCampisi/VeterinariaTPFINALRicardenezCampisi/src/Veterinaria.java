@@ -3,9 +3,7 @@
     import Enumeradores.ESTADOCITA;
     import Enumeradores.TIPOCITA;
     import Enumeradores.TURNO;
-    import Excepciones.CitaInvalidaExcep;
-    import Excepciones.ExcepcionNoExistente;
-    import Excepciones.ExcepcionYaExistente;
+    import Excepciones.*;
     import org.json.JSONArray;
     import org.json.JSONException;
     import org.json.JSONObject;
@@ -19,7 +17,7 @@
     public class Veterinaria {
         private final String nombre = "VETPET"; /// Guardar en el archivo segun el profe y lo de gmailAdmin + contraAdmin tambien || COMO???
         private final String direccion = "Juan B. Justo 492"; ///  Guardar en el archivo segun el profe
-        private final String emailAdmin = "adminVeterinaria@gmail.com";
+        private final String emailAdmin = "vetpet@gmail.com";
         private final String contraseniaAdmin = "Perrunos123";
         private Gestor<Empleado> Personal; ///veterinarios y recepcionistas
         private Gestor<Duenio> Duenios;
@@ -34,24 +32,36 @@
         public String getNombre() {
             return nombre;
         }
-
+        ///    AGREGAR CONTRASENIA DOS AL METODO para verificar || FALTA VERIFICAR DNI
         public void agregarEmpleado(String nombre, int edad, int dni, String email, String contrasenia, TURNO turno)throws ExcepcionYaExistente {
             Empleado empleado = new Empleado(nombre, edad, dni, email, contrasenia, turno);
-            try{
                     if(Personal.existe(empleado)){
                         throw new ExcepcionYaExistente("Empleado existente");
                     }else{
-
                         Personal.agregar(empleado);
                     }
-
-            }catch (ExcepcionYaExistente e){
-                System.out.println(e.getMessage());
-            }
-
         }
 
-        public void agregarVeterinario(String nombre, int edad, int dni, String email, String contrasenia, TURNO turno, String matricula, ESPECIE especialidad){
+        public void agregarVeterinario(String nombre, int edad, int dni, String email, String contrasenia, TURNO turno, String matricula)throws ExcepcionYaExistente {
+            Veterinario veterinario = new Veterinario(nombre,edad,dni,email,contrasenia,turno,matricula);
+            if(Personal.existe(veterinario)){
+                    throw new ExcepcionYaExistente("Veterinario ya existente");
+                } else{
+                Personal.agregar(veterinario);
+            }
+        }
+
+        public void agregarEspecialidadVeterinario(int dni, ESPECIE especialidad)throws ExcepcionNoExistente, ExcepcionNoCoincide, ExcepcionYaExistente{/// Hay que verificar de que exosta el veterinario
+            Empleado emp = Personal.obtenerPorIdentificador(dni);
+            if(emp != null){
+                if(emp instanceof Veterinario){
+                    ((Veterinario) emp).agregarEspecialidad(especialidad);
+                }else{
+                    throw new ExcepcionNoCoincide("El dni no es de un veterinario");
+                }
+            }else {
+                throw new ExcepcionNoExistente("El dni del veterinario no se encuentro en el sistema");
+            }
 
         }
         public String listarEmpleados(){
@@ -356,10 +366,34 @@
                     '}';
         }
 
+        public boolean ingresarAdmin(String email, String contrasenia){
+            boolean ingresado = false;
+            try {
+                if (Validaciones.validarMismoEmail(email, emailAdmin) && Validaciones.validarMismaContrasenia(contrasenia, contraseniaAdmin)) {
+                ingresado = true;
+                }
+            } catch (ExcepcionNoCoincide e){
+                System.out.println(e.getMessage());
+            } catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+            return ingresado;
+        }
         public void cargarVetJSON(String nombreArchivo){
             JSONObject jsonVet = this.toJSONVET();
             FileHandler.cargaJSONOBJ(jsonVet, nombreArchivo);
         }
 
+/*        public boolean crearCuenta(String email, String contrasenia, String contraseniaDos)throws ExcepcionFormatoNoValido, ExcepcionNoCoincide{
+            boolean cuentaValida = false;
 
+            if(Validaciones.validarFormatoEmail(email)){
+                if (Validaciones.validarFormatoContrasenia(contrasenia)){
+                    if(Validaciones.validarMismaContrasenia(contrasenia,contraseniaDos)){
+                        cuentaValida = true;
+                    }
+                }
+            }
+            return cuentaValida;
+        } */
     }

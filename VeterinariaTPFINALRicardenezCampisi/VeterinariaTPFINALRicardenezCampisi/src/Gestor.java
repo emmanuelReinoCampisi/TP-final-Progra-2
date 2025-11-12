@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 public class Gestor <T extends Identificable>  {
-    private HashSet<T> elementos;
+    private final HashSet<T> elementos;
 
     public Gestor(){
         elementos = new HashSet<>();

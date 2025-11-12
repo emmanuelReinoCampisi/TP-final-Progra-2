@@ -38,6 +38,15 @@ public abstract class Persona implements Identificable {
     }
 
     @Override
+    public String toString() {
+        return
+                "nombre='" + nombre + '\'' +
+                ", dni=" + dni +
+                ", edad=" + edad +
+                ',';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Persona persona = (Persona) o;

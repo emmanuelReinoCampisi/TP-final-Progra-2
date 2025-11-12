@@ -54,6 +54,16 @@ public class Empleado extends Persona{
         this.cuenta_activa = cuenta_activa;
     }
 
+    @Override
+    public String toString() {
+        return super.getClass().getSimpleName() + "{" + super.toString() + /// Modificar toString
+                "email='" + email + '\'' +
+                ", contrasenia='" + contrasenia + '\'' +
+                ", turno=" + turno +
+                ", cuenta_activa=" + cuenta_activa +
+                '}';
+    }
+
     public JSONObject TOJSON(){
         JSONObject empleadoJSON = new JSONObject();
         empleadoJSON.put("nombre",getNombre());
