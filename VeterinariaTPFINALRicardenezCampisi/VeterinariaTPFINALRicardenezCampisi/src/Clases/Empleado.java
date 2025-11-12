@@ -15,7 +15,7 @@ public class Empleado extends Persona{
         this.email = email;
         this.contrasenia = contrasenia;
         this.turno = turno;
-        this.cuenta_activa = false; /// al crear la cuenta se settea en true
+        this.cuenta_activa = true; /// al crear la cuenta se settea en true || Cambie esto porque estaba en false
     }
 
     public Empleado(String nombre, int edad, int dni, String email, String contrasenia, TURNO turno, boolean cuenta_activa) {

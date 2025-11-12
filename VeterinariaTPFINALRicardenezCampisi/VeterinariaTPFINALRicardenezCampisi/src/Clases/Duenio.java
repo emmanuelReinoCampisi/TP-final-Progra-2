@@ -1,5 +1,6 @@
 package Clases;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -95,7 +96,12 @@ public class Duenio extends Persona {
         duenioJSON.put("dni",getDni());
         duenioJSON.put("telefono",telefono);
         duenioJSON.put("direccion",direccion);
-
+        JSONArray mascotasJSON = new JSONArray();
+        for(Mascota m: mascotas){
+            JSONObject mascoJSON = m.mascotaTOJson();
+            mascotasJSON.put(mascoJSON);
+        }
+        duenioJSON.put("mascotas",mascotasJSON);
         return duenioJSON;
     }
 
@@ -109,6 +115,12 @@ public class Duenio extends Persona {
         String direccion = duenioJSON.getString("direccion");
 
         duenio = new Duenio(nombre,edad,dni,telefono,direccion);
+
+        JSONArray mascotasJSON = duenioJSON.getJSONArray("mascotas");
+        for(int i =0; i<mascotasJSON.length(); i++){
+            JSONObject mascotaJSON = mascotasJSON.getJSONObject(i);
+            duenio.agregarMascota(Mascota.mascotaFROMJson(mascotaJSON));
+        }
         return duenio;
     }
 }

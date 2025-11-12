@@ -51,6 +51,9 @@
 
         }
 
+        public void agregarVeterinario(String nombre, int edad, int dni, String email, String contrasenia, TURNO turno, String matricula, ESPECIE especialidad){
+
+        }
         public String listarEmpleados(){
             String lista = "";
             return lista += Personal.listar();
@@ -280,6 +283,78 @@
             return jsonVet;
         }
 
+        public static Veterinaria veterinariaFROMJson(JSONObject veterinariaJSON) throws ExcepcionYaExistente {
+            Veterinaria veterinaria = new Veterinaria();
+
+            JSONArray personalArray = veterinariaJSON.getJSONArray("personal");
+            for(int i = 0; i<personalArray.length(); i++){
+                JSONObject empleadoJSON = personalArray.getJSONObject(i);
+                if(empleadoJSON.has("matricula")){/// Si tiene una matricula entonces es un veterinario
+                Veterinario veterinario = Veterinario.veterinarioFROMJson(empleadoJSON);
+                veterinaria.agregarVeterinario(veterinario);
+                } else {
+                Empleado empleado = Empleado.empleadoFROMJson(empleadoJSON);
+                veterinaria.agregarEmpleado(empleado);
+                }
+            }
+            JSONArray dueniosArray = veterinariaJSON.getJSONArray("duenios");
+            for(int i = 0; i<dueniosArray.length(); i++){
+                JSONObject duenioJSON = dueniosArray.getJSONObject(i);
+                Duenio duenio = Duenio.duenioFROMJson(duenioJSON);
+                veterinaria.agregarDuenio(duenio);
+            }
+            JSONArray citasArray = veterinariaJSON.getJSONArray("citas");
+            for(int i = 0; i< citasArray.length(); i ++){
+                JSONObject citaJSON = citasArray.getJSONObject(i);
+                Cita cita = Cita.citaFROMJson(citaJSON);
+                veterinaria.agregarCita(cita);
+            }
+            return veterinaria;
+        }
+        /// Metodos para la deserializacion de veterinaria
+        public void agregarEmpleado(Empleado empleado)throws ExcepcionYaExistente{
+            if(Personal.existe(empleado)){
+                throw new ExcepcionYaExistente("El empleado a agregar ya existe");
+                } else{
+                    Personal.agregar(empleado);
+                }
+
+        }
+        public void agregarVeterinario(Veterinario veterinario)throws  ExcepcionYaExistente{
+            if (Personal.existe(veterinario)){
+                throw new ExcepcionYaExistente("El veterinario a agregar ya existe");
+            }else{
+                Personal.agregar(veterinario);
+            }
+
+        }
+        public void agregarCita(Cita cita) throws ExcepcionYaExistente{
+            if(Citas.existe(cita)){
+                throw new ExcepcionYaExistente("La cita a agregar ya existe");
+            } else {
+                Citas.agregar(cita);
+            }
+        }
+        public void agregarDuenio(Duenio duenio) throws ExcepcionYaExistente{
+            if(Duenios.existe(duenio)){
+                throw new ExcepcionYaExistente("El duenio a agregar ya existe");
+            } else {
+                Duenios.agregar(duenio);
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "Veterinaria{" +
+                    "nombre='" + nombre + '\'' +
+                    ", direccion='" + direccion + '\'' +
+                    ", emailAdmin='" + emailAdmin + '\'' +
+                    ", contraseniaAdmin='" + contraseniaAdmin + '\'' +
+                    ", Personal=" + Personal +
+                    ", Duenios=" + Duenios +
+                    ", Citas=" + Citas +
+                    '}';
+        }
 
         public void cargarVetJSON(String nombreArchivo){
             JSONObject jsonVet = this.toJSONVET();
