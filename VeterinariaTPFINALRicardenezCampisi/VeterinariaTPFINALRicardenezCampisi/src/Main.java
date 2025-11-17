@@ -15,11 +15,12 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Scanner;
 
+/// FALTA: activarCuenta- Verificar el formato de como se ingresa la fecha y horario - Verificar funcionamiento general e interfaz JSONable
 
 public class Main {
     public static void main(String[] args) throws ExcepcionYaExistente {
-        System.out.println("Hacer dos listar empleados, uno con empleados activos y otros con empleados desactivados");
-        System.out.println("Arranco");
+        //System.out.println("Hacer dos listar empleados, uno con empleados activos y otros con empleados desactivados");
+        //System.out.println("Arranco");
         try {
             Veterinaria.veterinariaFROMJson(new JSONObject());
         } catch (JSONException e) {
