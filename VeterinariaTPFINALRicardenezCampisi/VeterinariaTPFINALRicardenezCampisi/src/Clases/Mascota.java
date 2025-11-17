@@ -162,7 +162,7 @@ public class Mascota {
         mascotaJSON.put("raza",raza);
         mascotaJSON.put("dni_duenio",dniDuenio);
         for(Cita c: this.historialClinico){
-            citasJArray.put(c.citaTOJson());
+            citasJArray.put(c.toJSON());
         }
         mascotaJSON.put("citas",citasJArray);
         return mascotaJSON;
@@ -181,7 +181,8 @@ public class Mascota {
         JSONArray citasArray = mascotaJSON.getJSONArray("citas");
         for(int i = 0; i<citasArray.length(); i++){
             JSONObject citaJSON = citasArray.getJSONObject(i);
-            Cita cita = Cita.citaFROMJson(citaJSON);
+            Cita c = null;
+            Cita cita = c.fromJSON(citaJSON);
             mascota.agregarCita(cita);
         }
 

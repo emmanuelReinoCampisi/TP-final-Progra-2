@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 
-public class Veterinario extends Empleado {
+public class Veterinario extends Empleado  {
     private String matricula;
     private ArrayList <ESPECIE> especialidades;
     private HashSet<Cita> citas;
@@ -126,7 +126,8 @@ public class Veterinario extends Empleado {
         return mensaje;
     }
 
-    public JSONObject TOJSON(){
+    @Override
+    public JSONObject toJSON() {
         JSONObject empleadoJSON = new JSONObject();
         JSONArray especialidadesARRAY = new JSONArray();
         JSONArray citasARRAY = new JSONArray();
@@ -134,7 +135,7 @@ public class Veterinario extends Empleado {
             especialidadesARRAY.put(e.toString());
         }
         for(Cita c: citas){
-            citasARRAY.put(c.citaTOJson());
+            citasARRAY.put(c.toJSON());
         }
         empleadoJSON.put("nombre",getNombre());
         empleadoJSON.put("edad",getEdad());
@@ -149,7 +150,8 @@ public class Veterinario extends Empleado {
         return empleadoJSON;
     }
 
-    public static Veterinario veterinarioFROMJson(JSONObject veterinarioJSON) throws ExcepcionYaExistente{
+    @Override
+    public Veterinario fromJSON(JSONObject veterinarioJSON) {
         Veterinario veterinario = null;
 
         String nombre = veterinarioJSON.getString("nombre");
@@ -166,14 +168,18 @@ public class Veterinario extends Empleado {
         JSONArray especialidadesArray = veterinarioJSON.getJSONArray("especialidades");
         for(int i = 0; i<especialidadesArray.length();i++){
             ESPECIE especie = ESPECIE.valueOf(especialidadesArray.getString(i));
-            veterinario.agregarEspecialidad(especie); ///Linea de codigo que tira ya existente
+            try{
+                veterinario.agregarEspecialidad(especie);
+            } catch (ExcepcionYaExistente e){
+                e.printStackTrace();
+            }
         }
 
         JSONArray citasArray = veterinarioJSON.getJSONArray("citas");
         for (int i = 0;i<citasArray.length(); i++){
             JSONObject citaJSON = citasArray.getJSONObject(i);
-
-            Cita cita = Cita.citaFROMJson(citaJSON);
+            Cita c = null;
+            Cita cita = c.fromJSON(citaJSON);
             veterinario.asignarCita(cita);
         }
         return  veterinario;

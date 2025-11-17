@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class Duenio extends Persona {
+public class Duenio extends Persona  {
     private long telefono;
     private String direccion;
     private ArrayList<Mascota> mascotas;
@@ -16,6 +16,7 @@ public class Duenio extends Persona {
         this.direccion = direccion;
         this.mascotas = new ArrayList<>();
     }
+
 
     public long getTelefono() {
         return telefono;
@@ -62,6 +63,8 @@ public class Duenio extends Persona {
                 '}';
     }
 
+
+
     public boolean agregarMascota(Mascota mascota){
         boolean seAgrego = false;
         if(!mascotas.contains(mascota)){
@@ -89,7 +92,8 @@ public class Duenio extends Persona {
         return seElimino;
     }
 
-    public JSONObject TOJSON(){
+    @Override
+    public JSONObject toJSON() {
         JSONObject duenioJSON = new JSONObject();
         duenioJSON.put("nombre",getNombre());
         duenioJSON.put("edad",getEdad());
@@ -105,7 +109,8 @@ public class Duenio extends Persona {
         return duenioJSON;
     }
 
-    public static Duenio duenioFROMJson(JSONObject duenioJSON){
+    @Override
+    public  Duenio fromJSON(JSONObject duenioJSON) {
         Duenio duenio = null;
 
         String nombre = duenioJSON.getString("nombre");
@@ -123,4 +128,6 @@ public class Duenio extends Persona {
         }
         return duenio;
     }
+
+
 }

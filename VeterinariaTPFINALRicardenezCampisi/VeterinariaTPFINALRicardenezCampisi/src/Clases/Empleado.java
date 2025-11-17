@@ -1,10 +1,9 @@
 package Clases;
 
 import Enumeradores.TURNO;
-import Excepciones.ExcepcionYaExistente;
 import org.json.JSONObject;
 
-public class Empleado extends Persona{
+public class Empleado extends Persona {
     private String email;
     private String contrasenia;
     private TURNO turno;
@@ -64,7 +63,8 @@ public class Empleado extends Persona{
                 '}';
     }
 
-    public JSONObject TOJSON(){
+    @Override
+    public JSONObject toJSON() {
         JSONObject empleadoJSON = new JSONObject();
         empleadoJSON.put("nombre",getNombre());
         empleadoJSON.put("edad",getEdad());
@@ -76,7 +76,8 @@ public class Empleado extends Persona{
         return empleadoJSON;
     }
 
-    public static Empleado empleadoFROMJson(JSONObject empleadoJSON) {
+    @Override
+    public Empleado fromJSON(JSONObject empleadoJSON) {
         Empleado empleado = null;
         String nombre = empleadoJSON.getString("nombre");
         int edad = empleadoJSON.getInt("edad");
@@ -89,4 +90,6 @@ public class Empleado extends Persona{
         empleado = new Empleado(nombre,edad,dni,email,contrasenia,turno,cuenta_activa);
         return empleado;
     }
+
+
 }

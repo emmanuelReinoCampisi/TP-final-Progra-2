@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
 
-public class Cita implements Identificable{
+public class Cita implements Identificable,JSONable {
     private int idCita;
     private static int contador = 1000;
     private LocalDate fecha;
@@ -20,12 +20,12 @@ public class Cita implements Identificable{
     /// hay motivos predefinidos mas generales
     private int mascota_id;
     private ESTADOCITA estadoCita;
-    private int veterinario_dni;
+    private static int veterinario_dni;
     private String diagnostico;
 
 
-/// Constructor general
-    public Cita(LocalDate fecha, LocalTime horario, TIPOCITA motivo, ESTADOCITA estadoCita,int mascota_id, int veterinario_dni) {
+    /// Constructor general
+    public Cita(LocalDate fecha, LocalTime horario, TIPOCITA motivo, ESTADOCITA estadoCita, int mascota_id, int veterinario_dni) {
         this.idCita = ++contador;
         this.fecha = fecha;
         this.horario = horario;
@@ -34,7 +34,8 @@ public class Cita implements Identificable{
         this.estadoCita = estadoCita;
         this.veterinario_dni = veterinario_dni;
     }
-/// Constructor para el fromJSON
+
+    /// Constructor para el fromJSON
     public Cita(int id, LocalDate fecha, LocalTime horario, TIPOCITA motivo, ESTADOCITA estadoCita, int mascota_id, int veterinario_dni) {
         this.idCita = id;
         this.fecha = fecha;
@@ -102,7 +103,7 @@ public class Cita implements Identificable{
         return this.idCita;
     }
 
-    public LocalTime getFinCita(){
+    public LocalTime getFinCita() {
         return horario.plusMinutes(motivo.getDuracionMinutos()); // aca sabemos a que hora estimada termina la cita
     }
 
@@ -135,42 +136,41 @@ public class Cita implements Identificable{
                 ", motivo='" + motivo + '\'' +
                 ", id_mascota" + mascota_id +
                 ", estadoCita=" + estadoCita +
-                ", dni_veterinario" + veterinario_dni + (diagnostico != null ? diagnostico  : "") +
+                ", dni_veterinario" + veterinario_dni + (diagnostico != null ? diagnostico : "") +
                 '}';
     }
 
-     public JSONObject citaTOJson (){ /// Metodo para pasar una cita a JSONObject
+    @Override
+    public JSONObject toJSON() {
         JSONObject citaJSON = new JSONObject();
-        citaJSON.put("id_cita",idCita);
-        citaJSON.put("fecha",fecha);
-        citaJSON.put("horario",horario);
-        citaJSON.put("motivo",motivo);
-         citaJSON.put("estado_cita",estadoCita);
+        citaJSON.put("id_cita", idCita);
+        citaJSON.put("fecha", fecha);
+        citaJSON.put("horario", horario);
+        citaJSON.put("motivo", motivo);
+        citaJSON.put("estado_cita", estadoCita);
         citaJSON.put("id_mascota", mascota_id); // Se paso solamente el ID de la mascota para evitar un bucle donde citaTOJson llame a mascotaTOJson para que esta llame a citaTOJson nuevamente
         citaJSON.put("dni_veterinario", veterinario_dni);
         citaJSON.put("diagnostico", diagnostico);
         return citaJSON;
     }
 
-    public static Cita citaFROMJson(JSONObject citaJSON){  /// Al guardar solamente el id de la mascota la cita queda con la mascota vacia. Aca hay que cambiar las relaciones que tienen las clases
-        Cita cita = null;                                                  /// Esto tambien paso con Veterinario.
-        int id_cita = citaJSON.getInt("id_cita");  ///Hay que fijarse que no se cambien los ids.
-        String fechaString =citaJSON.getString("fecha");
-        LocalDate fecha = LocalDate.parse(fechaString);
 
-        String horarioString = citaJSON.getString("horario");
-        LocalTime horario = LocalTime.parse(horarioString);
+    @Override
+    public  Cita fromJSON(JSONObject jsonObject) {
+        Cita c = null;
+        int idCitaJ = jsonObject.getInt("id_cita");
+        LocalDate fechaJ = LocalDate.parse(jsonObject.getString("fecha"));
+        LocalTime horarioJ = LocalTime.parse(jsonObject.getString("horario"));
+        TIPOCITA motivoJ = TIPOCITA.valueOf(jsonObject.getString("motivo"));
+        ESTADOCITA estadoCitaJ = ESTADOCITA.valueOf(jsonObject.getString("estado_cita"));
+        int mascota_idJ = jsonObject.getInt("id_mascota");
+        int veterinario_dniJ = jsonObject.getInt("dni_veterinario");
+        String diagnosticoJ = jsonObject.optString("diagnostico", null);
 
-        TIPOCITA motivo = TIPOCITA.valueOf(citaJSON.getString("motivo"));
-        ESTADOCITA estadocita = ESTADOCITA.valueOf(citaJSON.getString("estado_cita"));
-        int id_mascota = citaJSON.getInt("id_mascota");
-        int dni_veterinario = citaJSON.getInt("dni_veterinario");
+         c = new Cita(idCitaJ,fechaJ,horarioJ,motivoJ,estadoCitaJ,mascota_idJ,veterinario_dni);
+        return c;
 
-        cita = new Cita(id_cita,fecha,horario,motivo,estadocita,id_mascota,dni_veterinario);
-        return cita;
+
     }
-
-
-
 
 }

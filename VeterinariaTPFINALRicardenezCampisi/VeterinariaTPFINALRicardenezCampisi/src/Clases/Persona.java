@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import java.util.Objects;
 
 
-public abstract class Persona implements Identificable {
+public abstract class Persona implements Identificable,JSONable{
     private String nombre;
     private int dni;
     private int edad;
@@ -63,6 +63,12 @@ public abstract class Persona implements Identificable {
         return this.dni;
     }
 
-    public abstract JSONObject TOJSON();
-
+    @Override
+    public JSONObject toJSON() {
+        JSONObject json = new JSONObject();
+        json.put("nombre", nombre);
+        json.put("edad", edad);
+        json.put("dni", dni);
+        return json;
+    }
 }

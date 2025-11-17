@@ -276,7 +276,7 @@
                 JSONArray empleadosJSON = jsonVet.getJSONArray("empleados");
                 Iterator<Empleado> itE = Personal.getIterator();
                 while (itE.hasNext()) {
-                    empleadosJSON.put(itE.next().TOJSON());
+                    empleadosJSON.put(itE.next().toJSON());
                 }
                 jsonVet.put("personal", empleadosJSON);
 
@@ -285,7 +285,7 @@
                 JSONArray dueniosJSON = jsonVet.getJSONArray("duenios");
                 Iterator<Duenio> itD = Duenios.getIterator();
                 while (itD.hasNext()) {
-                    dueniosJSON.put(itD.next().TOJSON());
+                    dueniosJSON.put(itD.next().toJSON());
                 }
                 jsonVet.put("duenios", dueniosJSON);
 
@@ -294,7 +294,7 @@
                 JSONArray citasJSON = jsonVet.getJSONArray("citas");
                 Iterator<Cita> itC = Citas.getIterator();
                 while (itC.hasNext()) {
-                    citasJSON.put(itC.next().citaTOJson());
+                    citasJSON.put(itC.next().toJSON());
                 }
                 jsonVet.put("citas", citasJSON);
 
@@ -312,23 +312,27 @@
             for(int i = 0; i<personalArray.length(); i++){
                 JSONObject empleadoJSON = personalArray.getJSONObject(i);
                 if(empleadoJSON.has("matricula")){/// Si tiene una matricula entonces es un veterinario
-                Veterinario veterinario = Veterinario.veterinarioFROMJson(empleadoJSON);
+                Veterinario v = null;
+                Veterinario veterinario = v.fromJSON(empleadoJSON);
                 veterinaria.agregarVeterinario(veterinario);
                 } else {
-                Empleado empleado = Empleado.empleadoFROMJson(empleadoJSON);
+                    Empleado e = null;
+                Empleado empleado = e.fromJSON(empleadoJSON);
                 veterinaria.agregarEmpleado(empleado);
                 }
             }
             JSONArray dueniosArray = veterinariaJSON.getJSONArray("duenios");
             for(int i = 0; i<dueniosArray.length(); i++){
                 JSONObject duenioJSON = dueniosArray.getJSONObject(i);
-                Duenio duenio = Duenio.duenioFROMJson(duenioJSON);
+                Duenio d =null;
+                Duenio duenio = d.fromJSON(duenioJSON);
                 veterinaria.agregarDuenio(duenio);
             }
             JSONArray citasArray = veterinariaJSON.getJSONArray("citas");
             for(int i = 0; i< citasArray.length(); i ++){
                 JSONObject citaJSON = citasArray.getJSONObject(i);
-                Cita cita = Cita.citaFROMJson(citaJSON);
+                Cita c = null;
+                Cita cita = c.fromJSON(citaJSON);
                 veterinaria.agregarCita(cita);
             }
             return veterinaria;
