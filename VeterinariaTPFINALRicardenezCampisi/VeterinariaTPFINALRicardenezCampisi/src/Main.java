@@ -56,25 +56,124 @@ public class Main {
                         opcionRecep = sc.nextInt();
                         sc.nextLine();
                         switch (opcionRecep) {
+
                             case 1:
+                                try {
+                                    System.out.print("Ingrese fecha o 0 para cancelar: ");
+                                    String fechaInput = sc.nextLine();
+                                    if (fechaInput.equals("0")) break;
+                                    LocalDate fecha = LocalDate.parse(fechaInput);
+                                    System.out.print("Ingrese hora: ");
+                                    LocalTime hora = LocalTime.parse(sc.nextLine());
+                                    System.out.println("Seleccione tipo de cita: 1.Control 2.Vacunación 3.Consulta General, 4.Cirugia, 5.Emergencia");
+                                    TIPOCITA tipocita = null;
+                                    int opcionCita = sc.nextInt();
+                                    sc.nextLine();
 
+                                    switch (opcionCita) {
+                                        case 1 -> tipocita = TIPOCITA.CONTROL;
+                                        case 2 -> tipocita = TIPOCITA.VACUNACION;
+                                        case 3 -> tipocita = TIPOCITA.CONSULTA_GENERAL;
+                                        case 4 -> tipocita = TIPOCITA.CIRUGIA;
+                                        case 5 -> tipocita = TIPOCITA.EMERGENCIA;
+                                        default -> System.out.println("OPCION INCORRECTA");
+                                    }
+                                    System.out.print("Ingrese ID de mascota: ");
+                                    int idMascota = sc.nextInt(); sc.nextLine();
+                                    System.out.print("Ingrese DNI del veterinario: ");
+                                    int dniVet = sc.nextInt(); sc.nextLine();
+                                    veterinaria.agregarCita(fecha, hora, tipocita, idMascota, ESTADOCITA.PENDIENTE, dniVet);
+                                    System.out.println("Cita asignada correctamente.");
+                                } catch (Exception e) {
+                                    System.out.println("Error: " + e.getMessage());
+                                }
                                 break;
-
                             case 2:
-
+                                try {
+                                    System.out.print("Ingrese fecha (YYYY-MM-DD): ");
+                                    LocalDate fechaCancel = LocalDate.parse(sc.nextLine());
+                                    System.out.print("Ingrese hora (HH:MM): ");
+                                    LocalTime horaCancel = LocalTime.parse(sc.nextLine());
+                                    System.out.print("Ingrese DNI del veterinario: ");
+                                    int dniVetCancel = sc.nextInt(); sc.nextLine();
+                                    veterinaria.cancelarCita(fechaCancel, horaCancel, dniVetCancel);
+                                    System.out.println("Cita cancelada.");
+                                } catch (Exception e) {
+                                    System.out.println("Error: " + e.getMessage());
+                                }
                                 break;
-
-
                             case 3:
-
+                                try {
+                                    System.out.println(veterinaria.listarCitasPendientes());
+                                } catch (Exception e) {
+                                    System.out.println(e.getMessage());
+                                }
                                 break;
-
                             case 4:
+                                try {
+                                    System.out.print("Ingrese nombre del dueño: ");
+                                    String nombreD = sc.nextLine();
+                                    System.out.print("Ingrese edad del dueño: ");
+                                    int edadD = sc.nextInt(); sc.nextLine();
+                                    System.out.print("Ingrese DNI del dueño: ");
+                                    int dniD = sc.nextInt(); sc.nextLine();
+                                    System.out.print("Ingrese teléfono: ");
+                                    long tel = sc.nextLong(); sc.nextLine();
+                                    System.out.print("Ingrese dirección: ");
+                                    String direccion = sc.nextLine();
+                                    System.out.print("Ingrese nombre de la mascota: ");
+                                    String nombreM = sc.nextLine();
+                                    System.out.print("Ingrese edad de la mascota: ");
+                                    int edadM = sc.nextInt(); sc.nextLine();
+                                    System.out.println("Seleccione especie: 1.Canino 2.Felino 3.Ave 4.Roedor 5.Reptil");
+                                    ESPECIE especie = null;
+                                    int opcionEspecie = sc.nextInt();
+                                    sc.nextLine();
 
+                                    switch (opcionEspecie) {
+                                        case 1 -> especie = ESPECIE.CANINO;
+                                        case 2 -> especie = ESPECIE.FELINO;
+                                        case 3 -> especie = ESPECIE.AVE;
+                                        case 4 -> especie = ESPECIE.ROEDOR;
+                                        case 5 -> especie = ESPECIE.REPTIL;
+                                        default -> System.out.println("OPCION INCORRECTA");
+                                    }
+                                    System.out.print("Ingrese raza: ");
+                                    String raza = sc.nextLine();
+                                    veterinaria.agregarDuenioNuevo(nombreD, edadD, dniD, tel, direccion, nombreM, edadM, especie, raza, dniD);
+                                    System.out.println("Dueño y mascota registrados.");
+                                } catch (Exception e) {
+                                    System.out.println("Error: " + e.getMessage());
+                                }
                                 break;
-
                             case 5:
+                                try {
+                                    System.out.print("Ingrese nombre de la mascota: ");
+                                    String nombreM = sc.nextLine();
+                                    System.out.print("Ingrese edad de la mascota: ");
+                                    int edadM = sc.nextInt(); sc.nextLine();
+                                    System.out.println("Seleccione especie: 1.Canino 2.Felino 3.Ave 4.Roedor 5.Reptil");
+                                    ESPECIE especie = null;
+                                    int opcionEspecie = sc.nextInt();
+                                    sc.nextLine();
 
+                                    switch (opcionEspecie) {
+                                        case 1 -> especie = ESPECIE.CANINO;
+                                        case 2 -> especie = ESPECIE.FELINO;
+                                        case 3 -> especie = ESPECIE.AVE;
+                                        case 4 -> especie = ESPECIE.ROEDOR;
+                                        case 5 -> especie = ESPECIE.REPTIL;
+                                        default -> System.out.println("OPCION INCORRECTA");
+                                    }
+                                    System.out.print("Ingrese raza: ");
+                                    String raza = sc.nextLine();
+                                    System.out.print("Ingrese DNI del dueño: ");
+                                    int dniDue = sc.nextInt(); sc.nextLine();
+                                    veterinaria.agregarMascotaADuenio(nombreM, edadM, especie, raza, dniDue);
+                                    System.out.println("Mascota registrada.");
+                                } catch (Exception e) {
+                                    System.out.println("Error: " + e.getMessage());
+                                }
                                 break;
 
                             case 6:

@@ -209,7 +209,7 @@
                 throw new ExcepcionNoExistente("No se encontró el dueño con DNI: " + dniDuenio);
             }
         }
-        
+
 
         public void cancelarCita(LocalDate fecha, LocalTime horario, int dniVet)throws CitaInvalidaExcep{
 
