@@ -199,6 +199,18 @@
         }
 
 
+        public boolean agregarMascotaADuenio(String nombreMascota, int edadMascota, ESPECIE especie, String raza, int dniDuenio) throws ExcepcionNoExistente {
+            Duenio duenio = Duenios.obtenerPorIdentificador(dniDuenio);
+            if (duenio != null) {
+                Mascota nuevaMascota = new Mascota(nombreMascota, edadMascota, especie, raza, dniDuenio);
+                duenio.agregarMascota(nuevaMascota);
+                return true;
+            } else {
+                throw new ExcepcionNoExistente("No se encontró el dueño con DNI: " + dniDuenio);
+            }
+        }
+        
+
         public void cancelarCita(LocalDate fecha, LocalTime horario, int dniVet)throws CitaInvalidaExcep{
 
             Cita citaCancelar = null;
