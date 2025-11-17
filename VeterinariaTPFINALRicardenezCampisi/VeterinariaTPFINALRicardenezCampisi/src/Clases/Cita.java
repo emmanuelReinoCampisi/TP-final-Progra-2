@@ -127,18 +127,27 @@ public class Cita implements Identificable,JSONable {
         return Objects.hashCode(idCita);
     }
 
+
     @Override
     public String toString() {
-        return "Cita{" +
-                "idCita=" + idCita +
-                ", fecha=" + fecha +
-                ", horario=" + horario +
-                ", motivo='" + motivo + '\'' +
-                ", id_mascota" + mascota_id +
-                ", estadoCita=" + estadoCita +
-                ", dni_veterinario" + veterinario_dni + (diagnostico != null ? diagnostico : "") +
-                '}';
+        final String RESET = "\u001B[0m";
+        final String BLUE = "\u001B[34m";
+        final String CYAN = "\u001B[36m";
+
+        return String.format(
+                BLUE + "Cita:" + RESET + "\n" +
+                        CYAN + "  ID: " + RESET + "%d\n" +
+                        CYAN + "  Fecha: " + RESET + "%s\n" +
+                        CYAN + "  Hora: " + RESET + "%s\n" +
+                        CYAN + "  Motivo: " + RESET + "%s\n" +
+                        CYAN + "  Estado: " + RESET + "%s\n" +
+                        CYAN + "  Mascota ID: " + RESET + "%d\n" +
+                        CYAN + "  Veterinario DNI: " + RESET + "%d\n" +
+                        CYAN + "  Diagnóstico: " + RESET + "%s\n",
+                idCita, fecha, horario, motivo, estadoCita, mascota_id, veterinario_dni, (diagnostico != null ? diagnostico : "Pendiente")
+        );
     }
+
 
     @Override
     public JSONObject toJSON() {

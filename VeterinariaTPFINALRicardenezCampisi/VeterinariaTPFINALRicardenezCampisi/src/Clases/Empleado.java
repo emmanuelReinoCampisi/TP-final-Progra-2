@@ -53,15 +53,25 @@ public class Empleado extends Persona {
         this.cuenta_activa = cuenta_activa;
     }
 
+
     @Override
     public String toString() {
-        return super.getClass().getSimpleName() + "{" + super.toString() + /// Modificar toString
-                "email='" + email + '\'' +
-                ", contrasenia='" + contrasenia + '\'' +
-                ", turno=" + turno +
-                ", cuenta_activa=" + cuenta_activa +
-                '}';
+        final String RESET = "\u001B[0m";
+        final String BLUE = "\u001B[34m";
+        final String CYAN = "\u001B[36m";
+
+        return String.format(
+                BLUE + "Empleado:" + RESET + "\n" +
+                        CYAN + "  Nombre: " + RESET + "%s\n" +
+                        CYAN + "  DNI: " + RESET + "%d\n" +
+                        CYAN + "  Edad: " + RESET + "%d\n" +
+                        CYAN + "  Email: " + RESET + "%s\n" +
+                        CYAN + "  Turno: " + RESET + "%s\n" +
+                        CYAN + "  Estado: " + RESET + "%s\n",
+                getNombre(), getDni(), getEdad(), email, turno, (cuenta_activa ? "Activo" : "Inactivo")
+        );
     }
+
 
     @Override
     public JSONObject toJSON() {

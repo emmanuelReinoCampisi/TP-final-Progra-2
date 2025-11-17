@@ -41,14 +41,27 @@ public class Veterinario extends Empleado  {
     }
 
 
+
     @Override
     public String toString() {
-        return super.getClass().getSimpleName() + "{ " + super.toString() +
-                "matricula='" + matricula + '\'' +
-                ", especialidades=" + especialidades +
-                ", citas=" + citas +
-                '}';
+        final String RESET = "\u001B[0m";
+        final String BLUE = "\u001B[34m";
+        final String CYAN = "\u001B[36m";
+
+        return String.format(
+                BLUE + "Veterinario:" + RESET + "\n" +
+                        CYAN + "  Nombre: " + RESET + "%s\n" +
+                        CYAN + "  DNI: " + RESET + "%d\n" +
+                        CYAN + "  Edad: " + RESET + "%d\n" +
+                        CYAN + "  Email: " + RESET + "%s\n" +
+                        CYAN + "  Turno: " + RESET + "%s\n" +
+                        CYAN + "  Matrícula: " + RESET + "%s\n" +
+                        CYAN + "  Especialidades: " + RESET + "%s\n" +
+                        CYAN + "  Estado: " + RESET + "%s\n",
+                getNombre(), getDni(), getEdad(), getEmail(), getTurno(), matricula, especialidades, (isCuenta_activa() ? "Activo" : "Inactivo")
+        );
     }
+
 
     public String listarEspecialidades() throws ExcepcionColeccionVacia {
         StringBuilder sb = new StringBuilder(" ");

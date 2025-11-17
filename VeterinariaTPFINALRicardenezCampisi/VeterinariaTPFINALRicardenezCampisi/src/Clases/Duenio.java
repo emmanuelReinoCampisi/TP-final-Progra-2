@@ -54,18 +54,28 @@ public class Duenio extends Persona  {
         }
         return sb.toString();
     }
+
     @Override
     public String toString() {
-        return "Clases.Duenio{" +
-                "telefono=" + telefono +
-                ", direccion='" + direccion + '\'' +
-                ", mascotas=" + mascotas +
-                '}';
+        final String RESET = "\u001B[0m";
+        final String BLUE = "\u001B[34m";
+        final String CYAN = "\u001B[36m";
+
+        return String.format(
+                BLUE + "Dueño:" + RESET + "\n" +
+                        CYAN + "  Nombre: " + RESET + "%s\n" +
+                        CYAN + "  DNI: " + RESET + "%d\n" +
+                        CYAN + "  Edad: " + RESET + "%d\n" +
+                        CYAN + "  Teléfono: " + RESET + "%d\n" +
+                        CYAN + "  Dirección: " + RESET + "%s\n" +
+                        CYAN + "  Mascotas:\n" + RESET + "%s",
+                getNombre(), getDni(), getEdad(), telefono, direccion, listarMascotas()
+        );
     }
 
 
 
-    public boolean agregarMascota(Mascota mascota){
+        public boolean agregarMascota(Mascota mascota){
         boolean seAgrego = false;
         if(!mascotas.contains(mascota)){
             mascotas.add(mascota);

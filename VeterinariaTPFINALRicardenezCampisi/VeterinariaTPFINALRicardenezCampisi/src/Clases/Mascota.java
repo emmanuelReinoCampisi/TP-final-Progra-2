@@ -88,18 +88,25 @@ public class Mascota {
         this.ID = ID;
     }
 
+
     @Override
     public String toString() {
-        return "Mascota{" +
-                "ID=" + ID +
-                ", nombre='" + nombre + '\'' +
-                ", edad=" + edad +
-                ", especie=" + especie +
-                ", raza='" + raza + '\'' +
-                ", dniDuenio=" + dniDuenio +
-                ", historialClinico=" + historialClinico +
-                '}';
+        final String RESET = "\u001B[0m";
+        final String BLUE = "\u001B[34m";
+        final String CYAN = "\u001B[36m";
+
+        return String.format(
+                BLUE + "Mascota:" + RESET + "\n" +
+                        CYAN + "  ID: " + RESET + "%d\n" +
+                        CYAN + "  Nombre: " + RESET + "%s\n" +
+                        CYAN + "  Edad: " + RESET + "%d\n" +
+                        CYAN + "  Especie: " + RESET + "%s\n" +
+                        CYAN + "  Raza: " + RESET + "%s\n" +
+                        CYAN + "  DNI Dueño: " + RESET + "%d\n",
+                ID, nombre, edad, especie, raza, dniDuenio
+        );
     }
+
 
     @Override
     public boolean equals(Object o) {
