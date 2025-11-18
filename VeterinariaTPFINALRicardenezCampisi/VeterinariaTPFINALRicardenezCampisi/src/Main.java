@@ -261,6 +261,7 @@ public class Main {
                                     System.out.println("3.Salir");
                                     System.out.println("Ingrese una opcion....");
                                     opcionRegistro = sc.nextInt();
+                                    sc.nextLine();
                                     switch (opcionRegistro) {
                                         case 1:
                                             try {
@@ -269,9 +270,9 @@ public class Main {
                                                 System.out.println("Ingrese el nombre del Empleado: ");
                                                 String nombreE = sc.nextLine();
 
-
                                                 System.out.println("Ingrese la edad del Empleado: ");
                                                 int edadE = sc.nextInt();
+                                                sc.nextLine();
                                                 Validaciones.validarEdad(edadE);
 
                                                 System.out.println("Ingrese el DNI del empleado: ");
@@ -452,8 +453,8 @@ public class Main {
 
 
                 case 4:
-                    System.out.println("⚙️-CERRANDO EL SISTEMA-⚙️");
-                    /// llamamos al metodo que persiste los datos en el archivo
+                    veterinaria.guardarDatos();
+
                     salir = true;
                     break;
                 default:
