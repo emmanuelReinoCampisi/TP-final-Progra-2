@@ -16,7 +16,7 @@ import java.util.Scanner;
 /// FALTA: activarCuenta- Verificar el formato de como se ingresa la fecha y horario - Verificar funcionamiento general e interfaz JSONable
 
 public class Main {
-    public static void main(String[] args) throws ExcepcionYaExistente {
+    public static void main(String[] args) {
         //System.out.println("Hacer dos listar empleados, uno con empleados activos y otros con empleados desactivados");
         Scanner sc = new Scanner(System.in);
         Veterinaria veterinaria = new Veterinaria();
@@ -358,7 +358,7 @@ public class Main {
                         int opcionAdmin;
                         do {
                             System.out.println("===== MODO ADMIN =====");
-                            System.out.println("1. Registrar un nuevo empleado"); ///al agregar empleado deberia poder elegir entre recepcionista y veterinario
+                            System.out.println("1. Registrar un nuevo empleado");
                             System.out.println("2. Listar Empleados");
                             System.out.println("3. Listar Duenios");
                             System.out.println("4. Desactivar Cuenta");
@@ -376,42 +376,52 @@ public class Main {
                                     System.out.println("3.Salir");
                                     System.out.println("Ingrese una opcion....");
                                     opcionRegistro = sc.nextInt();
-                                    sc.nextLine();
                                     switch (opcionRegistro) {
                                         case 1:
+                                            System.out.println("================Creando recepcionista================");
+                                            System.out.println("=Ingrese 0 en cualquier momento para cancelar el registro=");
+                                            registroRec: ///
                                             try {
-                                                System.out.println("===Creando recepcionista===");
                                                 //System.out.println("Ingrese 0 para cancelar el ingreso."); Falta agregar la cancelacion del ingreso
                                                 System.out.println("Ingrese el nombre del Empleado: ");
                                                 String nombreE = sc.nextLine();
+                                                if(nombreE.equals("0")) break registroRec;
 
                                                 System.out.println("Ingrese la edad del Empleado: ");
-                                                int edadE = sc.nextInt();
-                                                sc.nextLine();
+                                                String edadString = sc.nextLine();
+                                                if (edadString.equals("0")) break registroRec;
+                                                int edadE = Integer.parseInt(edadString);
                                                 Validaciones.validarEdad(edadE);
 
-                                                System.out.println("Ingrese el DNI del empleado: ");
-                                                int dniE = sc.nextInt();
+                                                System.out.println("Ingrese el DNI del Empleado: ");
+                                                String dniString = sc.nextLine();
+                                                if(dniString.equals("0")) break registroRec;
+                                                int dniE = Integer.parseInt(dniString);
                                                 Validaciones.validarFormatoDNI(dniE);
-                                                sc.nextLine();
 
-
-                                                System.out.println("Ingrese el email del nuevo empleado: ");
+                                                System.out.println("Ingrese el email del nuevo Empleado: ");
                                                 String emailE = sc.nextLine();
+                                                if (emailE.equals("0")) break registroRec;
                                                 Validaciones.validarFormatoEmail(emailE);
-                                                System.out.println("Ingrese la contraseña predefinida para el empleado: ");
+
+                                                System.out.println("Ingrese la contraseña predefinida para el Empleado: ");
                                                 String contraE = sc.nextLine();
+                                                if (contraE.equals("0")) break registroRec;
                                                 Validaciones.validarFormatoContrasenia(contraE);
+
                                                 System.out.println("Confirme la contraseña.");
                                                 String contraConfirmadaE = sc.nextLine();
+                                                if (contraConfirmadaE.equals("0")) break registroRec;
                                                 Validaciones.validarMismaContrasenia(contraE, contraConfirmadaE);
+
                                                 System.out.println("Seleccione el turno que va a ocupar el Empleado: ");
                                                 System.out.println("1. Turno mañana");
                                                 System.out.println("2. Turno tarde");
                                                 System.out.println("3. Turno noche");
                                                 TURNO turnoSeleccionadoE = null;
-                                                int opcionTurnoE = sc.nextInt();
-                                                sc.nextLine();
+                                                String opcionTurnoEString = sc.nextLine();
+                                                if (opcionTurnoEString.equals("0")) break registroRec;
+                                                int opcionTurnoE = Integer.parseInt(opcionTurnoEString);
 
                                                 switch (opcionTurnoE) {
                                                     case 1:
@@ -441,40 +451,49 @@ public class Main {
                                             }
                                             break;
                                         case 2:
+                                            registroVet:
                                             try {
                                                 sc.nextLine();
-                                                System.out.println("===Creando Veterinario===");
-                                                //System.out.println("Ingrese 0 para cancelar el ingreso."); Falta agregar la cancelacion del ingreso
+                                                System.out.println("================Creando Veterinario================");
+                                                System.out.println("Ingrese 0 en cualquier momento previo al ingreso de especialidades para cancelar el ingreso.");
                                                 System.out.println("Ingrese el nombre del Veterinario: ");
                                                 String nombreV = sc.nextLine();
-
+                                                if (nombreV.equals("0")) break registroVet;
 
                                                 System.out.println("Ingrese la edad del Veterinario: ");
-                                                int edadV = sc.nextInt();
+                                                String edadVString = sc.nextLine();
+                                                int edadV = Integer.parseInt(edadVString);
                                                 Validaciones.validarEdad(edadV);
 
                                                 System.out.println("Ingrese el DNI del Verinario: ");
-                                                int dniV = sc.nextInt();
+                                                String dniVString = sc.nextLine();
+                                                if (dniVString.equals("0")) break registroVet;
+                                                int dniV = Integer.parseInt(dniVString);
                                                 Validaciones.validarFormatoDNI(dniV);
-                                                sc.nextLine();
-
 
                                                 System.out.println("Ingrese el email del nuevo Verinario: ");
                                                 String emailV = sc.nextLine();
+                                                if (emailV.equals("0")) break registroVet;
                                                 Validaciones.validarFormatoEmail(emailV);
+
                                                 System.out.println("Ingrese la contraseña predefinida para el empleado: ");
                                                 String contraV = sc.nextLine();
+                                                if(contraV.equals("0")) break registroVet;
                                                 Validaciones.validarFormatoContrasenia(contraV);
+
                                                 System.out.println("Confirme la contraseña.");
                                                 String contraConfirmadaV = sc.nextLine();
+                                                if(contraConfirmadaV.equals("0")) break registroVet;
                                                 Validaciones.validarMismaContrasenia(contraV, contraConfirmadaV);
+
                                                 System.out.println("Seleccione el turno que va a ocupar el Veterinario: ");
                                                 System.out.println("1. Turno mañana");
                                                 System.out.println("2. Turno tarde");
                                                 System.out.println("3. Turno noche");
                                                 TURNO turnoSeleccionadoV = null;
-                                                int opcionTurnoV = sc.nextInt();
-                                                sc.nextLine();
+                                                String opcionTurnoVString = sc.nextLine();
+                                                if(opcionTurnoVString.equals("0")) break registroVet;
+                                                int opcionTurnoV = Integer.parseInt(opcionTurnoVString);
 
                                                 switch (opcionTurnoV) {
                                                     case 1:
@@ -494,8 +513,10 @@ public class Main {
 
                                                 System.out.println("Ingrese la Matricula del Veterinario: ");
                                                 String matricula = sc.nextLine();
+                                                if (matricula.equals("0")) break registroVet;
                                                 Validaciones.validarFormatoMatricula(matricula);
                                                 veterinaria.agregarVeterinario(nombreV, edadV, dniV, emailV, contraV, turnoSeleccionadoV, matricula);
+
                                                 char seguirEspecialidades = 's';
                                                 while (seguirEspecialidades == 's') {
                                                     System.out.println("Seleccione las especialidades del Veterinario: ");

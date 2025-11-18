@@ -121,12 +121,12 @@ public class Validaciones {
     }
 
     public static boolean validarEdad(int edad) throws ExcepcionFormatoNoValido {
-        boolean esMayor = false;
-        if(edad<18){
-            throw new ExcepcionFormatoNoValido ("La persona debe tener 18 años o mas.");
+        boolean valida = false;
+        if(edad<18 || edad>99){
+            throw new ExcepcionFormatoNoValido ("La persona debe tener entre 18 y 99 años.");
         } else{
-            esMayor = true;
+            valida = true;
         }
-        return esMayor;
+        return valida;
     }
 }
