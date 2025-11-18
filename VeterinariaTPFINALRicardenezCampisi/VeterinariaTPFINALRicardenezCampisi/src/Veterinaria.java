@@ -440,10 +440,6 @@
             }
             return desactivado;
         }
-        public void cargarVetJSON(String nombreArchivo){
-            JSONObject jsonVet = this.toJSONVET();
-            FileHandler.cargaJSONOBJ(jsonVet, nombreArchivo);
-        }
 
 /*        public boolean crearCuenta(String email, String contrasenia, String contraseniaDos)throws ExcepcionFormatoNoValido, ExcepcionNoCoincide{
             boolean cuentaValida = false;
