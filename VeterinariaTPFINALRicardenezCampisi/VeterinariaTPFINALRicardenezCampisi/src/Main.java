@@ -380,7 +380,7 @@ public class Main {
                                         case 1:
                                             System.out.println("================Creando recepcionista================");
                                             System.out.println("=Ingrese 0 en cualquier momento para cancelar el registro=");
-                                            registroRec: ///
+                                            registroRec: /// label o etiqueta, sirve para salir de multiples niveles de anidamiento de bucles: nos permitió salir de un while, switch y de un try con una sola instruccion
                                             try {
                                                 //System.out.println("Ingrese 0 para cancelar el ingreso."); Falta agregar la cancelacion del ingreso
                                                 System.out.println("Ingrese el nombre del Empleado: ");
