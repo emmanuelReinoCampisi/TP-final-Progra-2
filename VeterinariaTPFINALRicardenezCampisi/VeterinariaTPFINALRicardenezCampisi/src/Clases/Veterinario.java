@@ -20,6 +20,9 @@ public class Veterinario extends Empleado  {
     private ArrayList <ESPECIE> especialidades;
     private HashSet<Cita> citas;
 
+    public Veterinario() {
+    }
+
     public Veterinario(String nombre, int edad, int dni, String email, String contrasenia, TURNO turno, String matricula) {
         super(nombre, edad, dni, email, contrasenia, turno);
         this.matricula = matricula;

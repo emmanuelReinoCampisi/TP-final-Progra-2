@@ -46,6 +46,9 @@ public class Cita implements Identificable,JSONable {
         this.veterinario_dni = veterinario_dni;
     }
 
+    public Cita() {
+    }
+
     public String getDiagnostico() {
         return diagnostico;
     }

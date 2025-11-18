@@ -9,6 +9,9 @@ public class Empleado extends Persona {
     private TURNO turno;
     private boolean cuenta_activa;
 
+    public Empleado() {
+    }
+
     public Empleado(String nombre, int edad, int dni, String email, String contrasenia, TURNO turno) {
         super(nombre, edad, dni);
         this.email = email;

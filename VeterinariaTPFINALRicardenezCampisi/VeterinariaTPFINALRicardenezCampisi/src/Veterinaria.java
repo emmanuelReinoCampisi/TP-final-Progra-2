@@ -8,13 +8,16 @@
     import org.json.JSONException;
     import org.json.JSONObject;
 
+    import java.io.IOException;
     import java.time.LocalDate;
     import java.time.LocalDateTime;
     import java.time.LocalTime;
     import java.time.chrono.ChronoLocalDate;
     import java.util.Iterator;
+    import java.util.List;
 
     public class Veterinaria {
+        private final String NOMBRE_ARCHIVO = "veterinaria.json";
         private final String nombre = "VETPET"; /// Guardar en el archivo segun el profe y lo de gmailAdmin + contraAdmin tambien || COMO???
         private final String direccion = "Juan B. Justo 492"; ///  Guardar en el archivo segun el profe
         private final String emailAdmin = "vetpet@gmail.com";
@@ -441,6 +444,64 @@
             return desactivado;
         }
 
+        public void guardarDatos(){
+            JSONObject datosRaiz = new JSONObject();
+
+
+                JSONArray dueniosArray = JSONUtiles.gestorToArray(this.Duenios);
+                JSONArray personalArray = JSONUtiles.gestorToArray(this.Personal);
+                JSONArray citasArray = JSONUtiles.gestorToArray(this.Citas);
+
+                datosRaiz.put("duenios",dueniosArray);
+                datosRaiz.put("personal",personalArray);
+                datosRaiz.put("citas",citasArray);
+
+                String jsonString = JSONUtiles.serializar(datosRaiz);
+                FileHandler.guardarTexto(jsonString,NOMBRE_ARCHIVO);
+
+        } ///Consulta sobre bloque de try catch
+
+        public void cargarDatos(){
+            String jsonString = "";
+
+                jsonString = FileHandler.cargarTexto(NOMBRE_ARCHIVO);
+            /// Consulta sobre bloque try catch
+
+            try{
+            JSONObject datosRaiz = JSONUtiles.obtenerJSONObject(jsonString);
+            if (datosRaiz.has("duenios")){
+                JSONArray dueniosArray = datosRaiz.getJSONArray("duenios");
+                List<Duenio> dueniosCargados = JSONUtiles.arrayToObjetos(dueniosArray,new Duenio());
+                this.Duenios.cargarColeccion(dueniosCargados);
+            }
+            if (datosRaiz.has("personal")){
+                JSONArray personalArray = datosRaiz.getJSONArray("personal");
+                Empleado empleadoMolde = new Empleado();
+                Veterinario veteterinarioMolde = new Veterinario();
+
+                for (int i = 0; i<personalArray.length(); i++){
+                    JSONObject empJSON = personalArray.getJSONObject(i);
+                    if (empJSON.has("matricula")){
+                        Veterinario veterinario = veteterinarioMolde.fromJSON(empJSON);
+                        this.Personal.agregar(veterinario);
+                    }else {
+                      Empleado empleado = empleadoMolde.fromJSON(empJSON);
+                      this.Personal.agregar(empleado);
+                    }
+                }
+            }
+
+            if (datosRaiz.has("citas")){
+                JSONArray citasArray = datosRaiz.getJSONArray("citas");
+                List<Cita> citasCargadas = JSONUtiles.arrayToObjetos(citasArray,new Cita());
+                this.Citas.cargarColeccion(citasCargadas);
+            }
+            }catch (JSONException e){
+                System.out.println(e.getMessage());
+            } catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+        }
 /*        public boolean crearCuenta(String email, String contrasenia, String contraseniaDos)throws ExcepcionFormatoNoValido, ExcepcionNoCoincide{
             boolean cuentaValida = false;
 

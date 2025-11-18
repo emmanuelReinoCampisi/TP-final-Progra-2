@@ -10,6 +10,9 @@ public class Duenio extends Persona  {
     private String direccion;
     private ArrayList<Mascota> mascotas;
 
+    public Duenio() {
+    }
+
     public Duenio(String nombre, int edad, int dni, long telefono, String direccion) {
         super(nombre, edad, dni);
         this.telefono = telefono;

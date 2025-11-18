@@ -18,6 +18,9 @@ public class Mascota {
     private int dniDuenio;
     private HashSet<Cita> historialClinico;
 
+    public Mascota() {
+    }
+
     public Mascota(String nombre, int edad, ESPECIE especie, String raza, int dniDuenio) {
         this.ID = ++contador;
         this.nombre = nombre;

@@ -10,6 +10,9 @@ public abstract class Persona implements Identificable,JSONable{
     private int dni;
     private int edad;
 
+    public Persona() {
+    }
+
     public Persona(String nombre, int edad, int dni) {
         this.nombre = nombre;
         this.edad = edad;
