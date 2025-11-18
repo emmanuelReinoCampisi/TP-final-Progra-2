@@ -60,23 +60,13 @@ public class Veterinario extends Empleado  {
                         CYAN + "  Turno: " + RESET + "%s\n" +
                         CYAN + "  Matrícula: " + RESET + "%s\n" +
                         CYAN + "  Especialidades: " + RESET + "%s\n" +
-                        CYAN + "  Estado: " + RESET + "%s\n",
+                        CYAN + "  Estado: " + RESET + "%s\n" +
+                        CYAN + "  Cargo: " + RESET + "Veterinario\n",
                 getNombre(), getDni(), getEdad(), getEmail(), getTurno(), matricula, especialidades, (isCuenta_activa() ? "Activo" : "Inactivo")
         );
     }
 
 
-    public String listarEspecialidades() throws ExcepcionColeccionVacia {
-        StringBuilder sb = new StringBuilder(" ");
-    if(!especialidades.isEmpty()) {
-        for (ESPECIE e : especialidades) {
-            sb.append(e).append("\n");
-        }
-    } else{
-        throw new ExcepcionColeccionVacia("El veterinario no cuenta con especialidades");
-    }
-        return sb.toString();
-    }
 
     public boolean agregarEspecialidad(ESPECIE espec) throws ExcepcionYaExistente {
         boolean seAgrego = false;
@@ -160,6 +150,7 @@ public class Veterinario extends Empleado  {
         empleadoJSON.put("contrasenia",getContrasenia());
         empleadoJSON.put("turno",getTurno());
         empleadoJSON.put("cuenta_activa",isCuenta_activa());
+        empleadoJSON.put("cargo","Veterinario");
         empleadoJSON.put("matricula",matricula);
         empleadoJSON.put("especialidades",especialidadesARRAY);
         empleadoJSON.put("citas",citasARRAY);

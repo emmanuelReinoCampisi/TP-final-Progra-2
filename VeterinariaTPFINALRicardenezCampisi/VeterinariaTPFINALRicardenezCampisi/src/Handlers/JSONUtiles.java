@@ -1,3 +1,6 @@
+package Handlers;
+
+import Clases.Gestor;
 import Clases.Identificable;
 import Clases.JSONable;
 import org.json.JSONArray;
@@ -13,7 +16,7 @@ public class JSONUtiles {
     /// Metodo que convierte el texto del archivo en un JSONObject
     public static JSONObject obtenerJSONObject(String contenidoJSON) throws JSONException {
         if (contenidoJSON == null || contenidoJSON.isEmpty()) {
-            return new JSONObject(); //Se devuelve un new JSONObject para evitar manejar una NullPointerException en el llamado de Veterinaria
+            return new JSONObject(); //Se devuelve un new JSONObject para evitar manejar una NullPointerException en el llamado de Clases.Veterinaria
         }                            //Si el archivo está vacio, empieza con un conjuntos de datos vacío y no con un error
         JSONTokener tokener = new JSONTokener(contenidoJSON);
         return new JSONObject(tokener);

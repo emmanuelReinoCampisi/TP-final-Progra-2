@@ -1,4 +1,4 @@
-import Clases.Identificable;
+package Clases;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -45,13 +45,13 @@ public Iterator <T> getIterator(){
 
     public String buscarPorId(int id) // con este buscamos por DNI
     {
-        String mensaje = "";
-        for(T t: elementos) if(t.getId()==id) return mensaje+=t.toString();
+        String mensaje = " ";
+        for(T t: elementos) if(t.getId()==id) return t.toString();
         return mensaje;
     }
 
 public HashSet<T> obtenerColeccion(){
-        return elementos;
+        return new HashSet<>(elementos);
 }
 
 public void cargarColeccion(Iterable<T> nuevosElementos){

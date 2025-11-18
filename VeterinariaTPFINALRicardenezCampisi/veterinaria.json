@@ -4,12 +4,13 @@
   "personal": [
     {
       "cuenta_activa": true,
-      "contrasenia": "mati123",
+      "contrasenia": "emma123",
       "turno": "MANIANA",
-      "nombre": "Matias",
+      "cargo": "Recepcionista",
+      "nombre": "Emma",
       "edad": 20,
       "dni": 46565171,
-      "email": "matias@gmail.com"
+      "email": "emmanuel@gmail.com"
     }
   ]
 }

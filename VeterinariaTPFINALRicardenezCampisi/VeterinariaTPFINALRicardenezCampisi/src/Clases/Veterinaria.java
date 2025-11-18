@@ -1,18 +1,17 @@
-    import Clases.*;
-    import Enumeradores.ESPECIE;
+package Clases;
+
+import Enumeradores.ESPECIE;
     import Enumeradores.ESTADOCITA;
     import Enumeradores.TIPOCITA;
     import Enumeradores.TURNO;
     import Excepciones.*;
-    import org.json.JSONArray;
+    import Handlers.*;
+import org.json.JSONArray;
     import org.json.JSONException;
     import org.json.JSONObject;
 
-    import java.io.IOException;
     import java.time.LocalDate;
-    import java.time.LocalDateTime;
     import java.time.LocalTime;
-    import java.time.chrono.ChronoLocalDate;
     import java.util.Iterator;
     import java.util.List;
 
@@ -35,7 +34,7 @@
         public String getNombre() {
             return nombre;
         }
-        ///    AGREGAR CONTRASENIA DOS AL METODO para verificar || FALTA VERIFICAR DNI
+
         public void agregarEmpleado(String nombre, int edad, int dni, String email, String contrasenia, TURNO turno)throws ExcepcionYaExistente {
             Empleado empleado = new Empleado(nombre, edad, dni, email, contrasenia, turno);
                     if(Personal.existe(empleado)){
@@ -73,15 +72,16 @@
         }
 
         public String listarDuenios(){
+
             String lista = "";
             return lista += Duenios.listar();
         }
 
-    public void agregarCita (LocalDate fecha, LocalTime horario, TIPOCITA motivo,int idMascota, ESTADOCITA estadoCita, int  dniVet)throws CitaInvalidaExcep, ExcepcionNoExistente {
+    public void agregarCita (LocalDate fecha, LocalTime horario, TIPOCITA motivo,int idMascota, ESTADOCITA estadoCita, int  dniVet)throws CitaInvalidaExcep, ExcepcionNoExistente, ExcepcionNoCoincide {
             Cita c = new Cita(fecha, horario, motivo, estadoCita,idMascota,dniVet);
             Veterinario vet = (Veterinario) Personal.obtenerPorIdentificador(dniVet);
-
             Validaciones.validarFecha(fecha);
+            Validaciones.validarRangoAnio(fecha);
             Validaciones.validarHorarioRango(horario);
             LocalTime finCitaNueva = c.getHorario().plusMinutes(c.getMotivo().getDuracionMinutos()); /// calculamos el horario aproximado del fin de la cita que queremos cargar
 
@@ -162,16 +162,27 @@
 
         }
 
-        public String buscarDuenioPorDNI(int dni)
-        {
-            String lista = "";
-            return lista = Duenios.buscarPorId(dni);
+        public String buscarDuenioPorDNI(int dni)throws ExcepcionNoExistente
+        {   String lista = " ";
+            if(!lista.equals(Duenios.buscarPorId(dni))){
+                lista= Duenios.buscarPorId(dni);
+            }else {
+                throw new ExcepcionNoExistente("El dni no pertenece a ningun dueño registrado.");
+            }
+
+            return lista;
 
         }
 
-        public String buscarEmpleadoPorDNI(int dni) /// aca lo que le vamos a mandar es el mail o matricula del empleado ya que son unicos
+        public String buscarEmpleadoPorDNI(int dni) throws  ExcepcionNoExistente
         {
-            String lista = "";
+            String lista = " ";
+            if(!lista.equals(Personal.buscarPorId(dni))){
+                lista= Personal.buscarPorId(dni);
+            }else {
+                throw new ExcepcionNoExistente("El dni no pertenece a ningun empleado registrado.");
+            }
+
             return lista = Personal.buscarPorId(dni);
         }
 
@@ -265,6 +276,24 @@
       }
 
 
+        public String listarCitasAtendidas()throws ExcepcionNoExistente{
+            String mensaje = "";
+            boolean citasPendientes = false;
+            Iterator<Cita> it = Citas.getIterator();
+            while(it.hasNext()) {
+                Cita c= it.next();
+                if(c.getEstadoCita().equals(ESTADOCITA.ATENDIDA)) {
+                    mensaje=c.toString();
+                    citasPendientes=true;
+                }
+            }
+
+            if(citasPendientes==false){
+                throw new ExcepcionNoExistente("No hay citas atendidas");
+            }
+            return mensaje;
+        }
+
 
 
         public JSONObject toJSONVET(){
@@ -308,73 +337,9 @@
             return jsonVet;
         }
 
-        public static Veterinaria veterinariaFROMJson(JSONObject veterinariaJSON) throws ExcepcionYaExistente {
-            Veterinaria veterinaria = new Veterinaria();
-
-            JSONArray personalArray = veterinariaJSON.getJSONArray("personal");
-            for(int i = 0; i<personalArray.length(); i++){
-                JSONObject empleadoJSON = personalArray.getJSONObject(i);
-                if(empleadoJSON.has("matricula")){/// Si tiene una matricula entonces es un veterinario
-                Veterinario v = new Veterinario();
-                Veterinario veterinario = v.fromJSON(empleadoJSON);
-                veterinaria.agregarVeterinario(veterinario);
-                } else {
-                    Empleado e = new Empleado();
-                Empleado empleado = e.fromJSON(empleadoJSON);
-                veterinaria.agregarEmpleado(empleado);
-                }
-            }
-            JSONArray dueniosArray = veterinariaJSON.getJSONArray("duenios");
-            for(int i = 0; i<dueniosArray.length(); i++){
-                JSONObject duenioJSON = dueniosArray.getJSONObject(i);
-                Duenio d =new Duenio();
-                Duenio duenio = d.fromJSON(duenioJSON);
-                veterinaria.agregarDuenio(duenio);
-            }
-            JSONArray citasArray = veterinariaJSON.getJSONArray("citas");
-            for(int i = 0; i< citasArray.length(); i ++){
-                JSONObject citaJSON = citasArray.getJSONObject(i);
-                Cita c = new Cita();
-                Cita cita = c.fromJSON(citaJSON);
-                veterinaria.agregarCita(cita);
-            }
-            return veterinaria;
-        }
-        /// Metodos para la deserializacion de veterinaria
-        public void agregarEmpleado(Empleado empleado)throws ExcepcionYaExistente{
-            if(Personal.existe(empleado)){
-                throw new ExcepcionYaExistente("El empleado a agregar ya existe");
-                } else{
-                    Personal.agregar(empleado);
-                }
-
-        }
-        public void agregarVeterinario(Veterinario veterinario)throws  ExcepcionYaExistente{
-            if (Personal.existe(veterinario)){
-                throw new ExcepcionYaExistente("El veterinario a agregar ya existe");
-            }else{
-                Personal.agregar(veterinario);
-            }
-
-        }
-        public void agregarCita(Cita cita) throws ExcepcionYaExistente{
-            if(Citas.existe(cita)){
-                throw new ExcepcionYaExistente("La cita a agregar ya existe");
-            } else {
-                Citas.agregar(cita);
-            }
-        }
-        public void agregarDuenio(Duenio duenio) throws ExcepcionYaExistente{
-            if(Duenios.existe(duenio)){
-                throw new ExcepcionYaExistente("El duenio a agregar ya existe");
-            } else {
-                Duenios.agregar(duenio);
-            }
-        }
-
         @Override
         public String toString() {
-            return "Veterinaria{" +
+            return "Clases.Veterinaria{" +
                     "nombre='" + nombre + '\'' +
                     ", direccion='" + direccion + '\'' +
                     ", emailAdmin='" + emailAdmin + '\'' +
@@ -386,7 +351,7 @@
         }
         public boolean ingresarEmpleado(String email, String contra)throws ExcepcionFormatoNoValido,ExcepcionNoExistente,ExcepcionNoCoincide{
             boolean ingreso = false;
-            Validaciones.validarFormatoEmail(email);
+
             Validaciones.validarFormatoContrasenia(contra);
 
             Iterator<Empleado> it = Personal.getIterator();
@@ -417,7 +382,7 @@
             return ingresado;
         }
 
-        public boolean desactivarCuenta(String email){/// verificar si ya esta desactivada que no tire excepcion
+        public boolean desactivarCuenta(String email){
             boolean desactivado = false;///false: la cuenta no se desactivo | true: se desactivo
             try{
             Iterator<Empleado> it = Personal.getIterator();
@@ -442,6 +407,32 @@
                 System.out.println(e.getMessage());
             }
             return desactivado;
+        }
+        public boolean activarCuenta(String email){
+            boolean activado = false;
+            try{
+                Iterator<Empleado> it = Personal.getIterator();
+                while(it.hasNext()){
+                    Empleado emp = it.next();
+                    if(emp.getEmail().equalsIgnoreCase(email)){
+                        if(emp.isCuenta_activa() == true){
+                            throw new ExcepcionNoCoincide("La cuenta ya se encuentra activada");
+                        }
+                        emp.setCuenta_activa(true);
+                        activado = true;
+                    }
+                }
+                if(!activado){
+                    throw new ExcepcionNoExistente("No se encontro el mail");
+                }
+            } catch(ExcepcionNoExistente e){
+                System.out.println(e.getMessage());
+            } catch (ExcepcionNoCoincide e){
+                System.out.println(e.getMessage());
+            } catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+            return activado;
         }
 
         public void guardarDatos(){
@@ -505,9 +496,9 @@
 /*        public boolean crearCuenta(String email, String contrasenia, String contraseniaDos)throws ExcepcionFormatoNoValido, ExcepcionNoCoincide{
             boolean cuentaValida = false;
 
-            if(Validaciones.validarFormatoEmail(email)){
-                if (Validaciones.validarFormatoContrasenia(contrasenia)){
-                    if(Validaciones.validarMismaContrasenia(contrasenia,contraseniaDos)){
+            if(Handlers.Validaciones.validarFormatoEmail(email)){
+                if (Handlers.Validaciones.validarFormatoContrasenia(contrasenia)){
+                    if(Handlers.Validaciones.validarMismaContrasenia(contrasenia,contraseniaDos)){
                         cuentaValida = true;
                     }
                 }

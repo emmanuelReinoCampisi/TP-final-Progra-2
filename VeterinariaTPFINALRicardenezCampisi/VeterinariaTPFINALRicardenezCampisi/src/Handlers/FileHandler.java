@@ -1,9 +1,11 @@
+package Handlers;
+
 import java.io.*;
 
 public class FileHandler {
 
     // Metodos de lectura y escritura de texto en el archivo para mantener una correcta separacion de responsabilidades entre
-    //  nuestra clase FileHandler y nuestra clase JSONUtiles
+    //  nuestra clase Handlers.FileHandler y nuestra clase Handlers.JSONUtiles
 
     /// Lectura de nuestro archivo
     public static String cargarTexto(String nombreArchivo){
@@ -28,7 +30,7 @@ public class FileHandler {
             }
         }
 
-        return contenido.toString(); // Devuelve todo el archivo en un string para que otra clase (En JSONUtiles) lo utilice
+        return contenido.toString(); // Devuelve todo el archivo en un string para que otra clase (En Handlers.JSONUtiles) lo utilice
     }
 
     /// Guardado de nuestro archivo

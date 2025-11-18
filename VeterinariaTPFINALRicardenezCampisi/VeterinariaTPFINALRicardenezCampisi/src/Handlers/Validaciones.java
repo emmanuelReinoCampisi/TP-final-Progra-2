@@ -1,9 +1,13 @@
+package Handlers;
+
+import Clases.Cita;
 import Excepciones.CitaInvalidaExcep;
 import Excepciones.ExcepcionFormatoNoValido;
 import Excepciones.ExcepcionNoCoincide;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.regex.Pattern;
 
 public class Validaciones {
 
@@ -65,6 +69,36 @@ public class Validaciones {
            throw new ExcepcionNoCoincide("Las contrasenias no coinciden");
         }
         return mismaContrasenia;
+    }
+
+    public static boolean validarFormatoDNI(int dni)throws ExcepcionFormatoNoValido{
+        boolean valido = true;
+        if(dni < 10000000 || dni > 99999999){
+        throw new ExcepcionFormatoNoValido("El dni debe tener 8 digitos");
+        }
+        return valido;
+    }
+    public static boolean validarFormatoMatricula(String matricula)throws ExcepcionFormatoNoValido{
+        boolean valida = false;
+        String regex = "^[a-zA-Z]{3}[0-9]{3}$";
+
+        if (!Pattern.matches(regex, matricula)) {
+            throw new ExcepcionFormatoNoValido("El formato de la matrícula es inválido. Debe ser de 3 letras seguidas de 3 números (Ej: ABC123).");
+        }else {valida = true;}
+        return valida;
+    }
+
+    public static void validarRangoAnio(LocalDate fecha)throws CitaInvalidaExcep, ExcepcionNoCoincide {
+        int anioActual = LocalDate.now().getYear();
+        int anioProximo = anioActual + 1;
+        int anioIngresado = fecha.getYear();
+        if (fecha != null){
+            if (anioIngresado == anioActual || anioIngresado == anioProximo){
+                throw new ExcepcionNoCoincide("El anio ingresado debe ser el año actual o el siguiente");
+            }
+        }else {
+            throw new CitaInvalidaExcep ("Debe ingresar una fecha");
+        }
     }
 
     public static void validarFecha(LocalDate fecha) throws CitaInvalidaExcep {

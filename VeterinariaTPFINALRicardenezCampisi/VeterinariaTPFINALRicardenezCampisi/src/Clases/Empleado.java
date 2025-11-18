@@ -70,7 +70,8 @@ public class Empleado extends Persona {
                         CYAN + "  Edad: " + RESET + "%d\n" +
                         CYAN + "  Email: " + RESET + "%s\n" +
                         CYAN + "  Turno: " + RESET + "%s\n" +
-                        CYAN + "  Estado: " + RESET + "%s\n",
+                        CYAN + "  Estado: " + RESET + "%s\n"+
+                        CYAN + "  Cargo: " + RESET + "Recepcionista\n",
                 getNombre(), getDni(), getEdad(), email, turno, (cuenta_activa ? "Activo" : "Inactivo")
         );
     }
@@ -86,6 +87,7 @@ public class Empleado extends Persona {
         empleadoJSON.put("contrasenia",contrasenia);
         empleadoJSON.put("turno",turno);
         empleadoJSON.put("cuenta_activa",cuenta_activa);
+        empleadoJSON.put("cargo","Recepcionista");
         return empleadoJSON;
     }
 
