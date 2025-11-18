@@ -50,8 +50,14 @@ public Iterator <T> getIterator(){
         return mensaje;
     }
 
+public HashSet<T> obtenerColeccion(){
+        return elementos;
+}
 
-
-
+public void cargarColeccion(Iterable<T> nuevosElementos){
+        for (T elemento : nuevosElementos){
+            this.agregar(elemento);
+        }
+}
 
 }
