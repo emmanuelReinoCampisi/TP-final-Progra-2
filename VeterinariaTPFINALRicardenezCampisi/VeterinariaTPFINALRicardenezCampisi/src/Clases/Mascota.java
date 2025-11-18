@@ -97,6 +97,18 @@ public class Mascota {
         final String RESET = "\u001B[0m";
         final String BLUE = "\u001B[34m";
         final String CYAN = "\u001B[36m";
+        StringBuilder historial = new StringBuilder();
+
+        historial.append(CYAN).append("  Historial Clínico: ").append(RESET);
+
+        if (historialClinico == null || historialClinico.isEmpty()) {
+            historial.append("Sin citas registradas.\n");
+        } else {
+            historial.append("\n");
+            for (Cita c : historialClinico) {
+                historial.append("    - ").append(c.toString()).append("\n");
+            }
+        }
 
         return String.format(
                 BLUE + "Mascota:" + RESET + "\n" +
@@ -106,8 +118,10 @@ public class Mascota {
                         CYAN + "  Especie: " + RESET + "%s\n" +
                         CYAN + "  Raza: " + RESET + "%s\n" +
                         CYAN + "  DNI Dueño: " + RESET + "%d\n",
-                ID, nombre, edad, especie, raza, dniDuenio
+                ID, nombre, edad, especie, raza, dniDuenio,historial.toString()
         );
+
+
     }
 
 

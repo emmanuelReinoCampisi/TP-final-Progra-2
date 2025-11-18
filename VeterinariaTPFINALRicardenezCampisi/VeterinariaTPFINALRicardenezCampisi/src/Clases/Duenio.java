@@ -41,7 +41,7 @@ public class Duenio extends Persona  {
         StringBuilder sb = new StringBuilder(" ");
 
         for(Mascota m: mascotas){
-            sb.append(m).append("\n");
+            sb.append(m.toString()).append("\n");
         }
         return sb.toString();
     }

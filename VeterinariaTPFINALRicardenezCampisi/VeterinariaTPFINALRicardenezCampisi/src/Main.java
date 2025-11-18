@@ -53,7 +53,8 @@ public class Main {
                                 System.out.println("3. Listar citas ");
                                 System.out.println("4. Registrar nuevo Dueño");
                                 System.out.println("5. Registrar nueva Mascota");
-                                System.out.println("6. Guardar y salir");
+                                System.out.println("6. Listar Mascota ");
+                                System.out.println("7. Guardar y salir");
                                 System.out.println("Ingrese una opcion....");
                                 opcionRecep = sc.nextInt();
                                 sc.nextLine();
@@ -101,6 +102,8 @@ public class Main {
                                         break;
                                     case 2:
                                         try {
+                                            System.out.println("-------CITAS PENDIENTES---------");
+                                            System.out.println(veterinaria.listarCitasPendientes()+"\n\n");
                                             System.out.print("Ingrese fecha (YYYY-MM-DD): ");
                                             LocalDate fechaCancel = LocalDate.parse(sc.nextLine());
                                             System.out.print("Ingrese hora (HH:MM): ");
@@ -223,6 +226,44 @@ public class Main {
                                         break;
 
                                     case 6:
+                                            int opcionListado = 0;
+                                            do{
+                                                System.out.println("1. Listar todas las mascotas registradas");
+                                                System.out.println("2. Listar una mascota en especifico");
+                                                System.out.println("3. Salir");
+                                                System.out.println("Ingrese opcion...");
+                                                opcionListado = sc.nextInt();
+
+                                                switch (opcionListado) {
+
+                                                    case 1:
+                                                        System.out.println(veterinaria.listarMascotas());
+                                                        break;
+
+
+                                                    case 2:
+                                                        System.out.println("Ingrese el DNI del dueño de la mascota: ");
+                                                        int dniDue = sc.nextInt();
+                                                        sc.nextLine();
+                                                        System.out.println("Ingrese el nombre de la mascota: ");
+                                                        String nombreM = sc.nextLine();
+                                                        System.out.println(veterinaria.listarMascotaEspecifica(dniDue,nombreM));
+
+
+                                                        break;
+
+                                                    case 3:
+                                                        System.out.println("Volviendo....");
+                                                        break;
+
+                                                    default:
+                                                        System.out.println("OPCION INCORRECTA");
+                                                        break;
+                                                }
+
+                                            }while(opcionListado != 3);
+                                        break;
+                                    case 7:
                                         System.out.println("Cerrando sesion....");
                                         break;
 
@@ -231,13 +272,15 @@ public class Main {
                                         break;
 
                                 }
-                            } while (opcionRecep != 6);
+                            } while (opcionRecep != 7);
                         }
                     }catch (ExcepcionFormatoNoValido e){
                         System.out.println(e.getMessage());
                     }catch (ExcepcionNoExistente e){
                         System.out.println(e.getMessage());
-                    }catch (ExcepcionNoCoincide e){
+                    }catch (ExcepcionCuentaInactiva e){
+                        System.out.println(e.getMessage());
+                    } catch (ExcepcionNoCoincide e){
                         System.out.println(e.getMessage());
                     }
                     break;
@@ -258,6 +301,7 @@ public class Main {
                         System.out.println("==== MENU VETERINARIO ===");
                         System.out.println("1. Listar citas pendientes");
                         System.out.println("2. Listar animales atendidos");
+                        System.out.println("3. Agregar diagnostico");
                         System.out.println("3. Agregar diagnostico");
                         System.out.println("4. Guardar y salir");
                         System.out.println();
@@ -294,7 +338,9 @@ public class Main {
                         System.out.println(e.getMessage());
                     }catch (ExcepcionNoExistente e){
                         System.out.println(e.getMessage());
-                    }catch (ExcepcionNoCoincide e){
+                    }catch (ExcepcionCuentaInactiva e){
+                        System.out.println(e.getMessage());
+                    } catch (ExcepcionNoCoincide e){
                         System.out.println(e.getMessage());
                     }
                     break;

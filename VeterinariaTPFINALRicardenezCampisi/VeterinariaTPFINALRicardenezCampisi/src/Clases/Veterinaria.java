@@ -186,20 +186,19 @@ import org.json.JSONArray;
             return lista = Personal.buscarPorId(dni);
         }
 
-        public String listarMascotas(int dni) {
+        public String listarMascotas() {
             String mensaje = "";
-            Duenio d = Duenios.obtenerPorIdentificador(dni);
-            if (d != null) {
+
                 Iterator<Duenio> it = Duenios.getIterator();
                 while (it.hasNext()) {
                     Duenio duenio = it.next();
                     mensaje+=duenio.listarMascotas();
                 }
-            }
+
             return mensaje;
         }
 
-        public String listarMascotasEspecifica(int dni, String nombreMascota) {
+        public String listarMascotaEspecifica(int dni, String nombreMascota) {
             String mensaje = "";
             Duenio d = Duenios.obtenerPorIdentificador(dni);
             if (d != null) {
@@ -349,7 +348,7 @@ import org.json.JSONArray;
                     ", Citas=" + Citas +
                     '}';
         }
-        public boolean ingresarEmpleado(String email, String contra)throws ExcepcionFormatoNoValido,ExcepcionNoExistente,ExcepcionNoCoincide{
+        public boolean ingresarEmpleado(String email, String contra)throws ExcepcionFormatoNoValido,ExcepcionNoExistente,ExcepcionNoCoincide,ExcepcionCuentaInactiva{
             boolean ingreso = false;
 
             Validaciones.validarFormatoContrasenia(contra);
@@ -358,10 +357,15 @@ import org.json.JSONArray;
             while(it.hasNext()){
                 Empleado emp = it.next();
                 if(emp.getEmail().equalsIgnoreCase(email)){
+                    if (!emp.isCuenta_activa()) {
+                        throw new ExcepcionCuentaInactiva("La cuenta está desactivada. Contacte al administrador.");
+                    }
+
                     ingreso = true;
-                    Validaciones.validarMismaContrasenia(contra,emp.getContrasenia());
+                    Validaciones.validarMismaContrasenia(contra, emp.getContrasenia());
                 }
             }
+
             if(!ingreso){
                 throw new ExcepcionNoExistente("El email ingresado no se encuentra en el sistema");
             }
